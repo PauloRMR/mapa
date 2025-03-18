@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_33df50edc92a0deee8abd50d014fdbfb {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_33df50edc92a0deee8abd50d014fdbfb" ></div>
+        
+    
+    <div style="position: fixed;
+                bottom: 50px; left: 50px; width: 400px; height: 300px;
+                z-index:9999;
+                background-color: white;
+                overflow:auto;
+                border:2px solid grey;
+                border-radius:5px;
+                padding:10px;">
+        <h4>Resumo das Vias</h4>
+        <table border="1" class="dataframe table table-striped">
+  <thead>
+    <tr style="text-align: right;">
+      <th>via</th>
+      <th>origem</th>
+      <th>destino</th>
+      <th>distancia_carro</th>
+      <th>duracao_carro_sem_transito</th>
+      <th>duracao_carro_com_transito</th>
+      <th>condicao_transito</th>
+      <th>distancia_onibus</th>
+      <th>duracao_onibus</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Avenida Marechal Floriano Peixoto</td>
+      <td>Av. Marechal Floriano Peixoto, 1, Centro, Curitiba, PR</td>
+      <td>Av. Marechal Floriano Peixoto, 8000, Boqueirão, Curitiba, PR</td>
+      <td>8.5 km</td>
+      <td>21 mins</td>
+      <td>25 mins</td>
+      <td>Trânsito leve</td>
+      <td>8.4 km</td>
+      <td>39 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Visconde de Guarapuava</td>
+      <td>Av. Visconde de Guarapuava, 1, Centro, Curitiba, PR</td>
+      <td>Av. Visconde de Guarapuava, 4500, Centro, Curitiba, PR</td>
+      <td>5.1 km</td>
+      <td>13 mins</td>
+      <td>16 mins</td>
+      <td>Trânsito leve</td>
+      <td>6.2 km</td>
+      <td>31 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Sete de Setembro</td>
+      <td>Av. Sete de Setembro, 1, Centro, Curitiba, PR</td>
+      <td>Av. Sete de Setembro, 6000, Batel, Curitiba, PR</td>
+      <td>4.7 km</td>
+      <td>14 mins</td>
+      <td>16 mins</td>
+      <td>Trânsito leve</td>
+      <td>3.9 km</td>
+      <td>19 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida República Argentina</td>
+      <td>Av. República Argentina, 1, Água Verde, Curitiba, PR</td>
+      <td>Av. República Argentina, 4700, Portão, Curitiba, PR</td>
+      <td>5.9 km</td>
+      <td>14 mins</td>
+      <td>16 mins</td>
+      <td>Trânsito leve</td>
+      <td>4.8 km</td>
+      <td>24 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Presidente Kennedy</td>
+      <td>Av. Pres. Kennedy, 1, Guaíra, Curitiba, PR</td>
+      <td>Av. Pres. Kennedy, 3100, Parolin, Curitiba, PR</td>
+      <td>0.7 km</td>
+      <td>1 min</td>
+      <td>1 min</td>
+      <td>Trânsito livre</td>
+      <td>0.7 km</td>
+      <td>4 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Iguaçu</td>
+      <td>Av. Iguaçu, 1, Rebouças, Curitiba, PR</td>
+      <td>Av. Iguaçu, 2800, Água Verde, Curitiba, PR</td>
+      <td>2.4 km</td>
+      <td>7 mins</td>
+      <td>7 mins</td>
+      <td>Trânsito livre</td>
+      <td>2.4 km</td>
+      <td>15 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Comendador Franco (Av. das Torres)</td>
+      <td>Av. Comendador Franco, 1, Jardim Botânico, Curitiba, PR</td>
+      <td>Av. Comendador Franco, 4500, Jardim das Américas, Curitiba, PR</td>
+      <td>5.4 km</td>
+      <td>9 mins</td>
+      <td>9 mins</td>
+      <td>Trânsito livre</td>
+      <td>4.5 km</td>
+      <td>21 mins</td>
+    </tr>
+    <tr>
+      <td>Rua João Gualberto</td>
+      <td>Rua João Gualberto, 1, Centro, Curitiba, PR</td>
+      <td>Rua João Gualberto, 2500, Alto da Glória, Curitiba, PR</td>
+      <td>2.4 km</td>
+      <td>7 mins</td>
+      <td>7 mins</td>
+      <td>Trânsito livre</td>
+      <td>2.4 km</td>
+      <td>11 mins</td>
+    </tr>
+    <tr>
+      <td>Rua Mateus Leme</td>
+      <td>Rua Mateus Leme, 1, Centro Cívico, Curitiba, PR</td>
+      <td>Rua Mateus Leme, 3000, São Lourenço, Curitiba, PR</td>
+      <td>3.0 km</td>
+      <td>6 mins</td>
+      <td>7 mins</td>
+      <td>Trânsito leve</td>
+      <td>3.1 km</td>
+      <td>12 mins</td>
+    </tr>
+    <tr>
+      <td>Rodovia BR-116 (trecho urbano de Curitiba)</td>
+      <td>BR-116, 500, Pinheirinho, Curitiba, PR</td>
+      <td>BR-116, 15000, Tatuquara, Curitiba, PR</td>
+      <td>59.8 km</td>
+      <td>55 mins</td>
+      <td>56 mins</td>
+      <td>Trânsito livre</td>
+      <td>62.4 km</td>
+      <td>3 hours 21 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Manoel Ribas</td>
+      <td>Av. Manoel Ribas, 1, Mercês, Curitiba, PR</td>
+      <td>Av. Manoel Ribas, 4000, Santa Felicidade, Curitiba, PR</td>
+      <td>4.0 km</td>
+      <td>8 mins</td>
+      <td>9 mins</td>
+      <td>Trânsito leve</td>
+      <td>4.0 km</td>
+      <td>19 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Anita Garibaldi</td>
+      <td>Av. Anita Garibaldi, 1, Centro Cívico, Curitiba, PR</td>
+      <td>Av. Anita Garibaldi, 4000, Barreirinha, Curitiba, PR</td>
+      <td>4.3 km</td>
+      <td>10 mins</td>
+      <td>11 mins</td>
+      <td>Trânsito leve</td>
+      <td>5.3 km</td>
+      <td>24 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Fredolin Wolf</td>
+      <td>Av. Fredolin Wolf, 1, Santa Felicidade, Curitiba, PR</td>
+      <td>Av. Fredolin Wolf, 2500, São João, Curitiba, PR</td>
+      <td>2.5 km</td>
+      <td>4 mins</td>
+      <td>4 mins</td>
+      <td>Trânsito livre</td>
+      <td>3.3 km</td>
+      <td>37 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Hugo Simas</td>
+      <td>Av. Hugo Simas, 1, Bom Retiro, Curitiba, PR</td>
+      <td>Av. Hugo Simas, 1100, Pilarzinho, Curitiba, PR</td>
+      <td>0.1 km</td>
+      <td>1 min</td>
+      <td>1 min</td>
+      <td>Trânsito livre</td>
+      <td>0.1 km</td>
+      <td>2 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Presidente Wenceslau Brás</td>
+      <td>Av. Pres. Wenceslau Brás, 1, Parolin, Curitiba, PR</td>
+      <td>Av. Pres. Wenceslau Brás, 1700, Lindóia, Curitiba, PR</td>
+      <td>1.9 km</td>
+      <td>4 mins</td>
+      <td>4 mins</td>
+      <td>Trânsito livre</td>
+      <td>2.2 km</td>
+      <td>13 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Winston Churchill</td>
+      <td>Av. Winston Churchill, 1, Capão Raso, Curitiba, PR</td>
+      <td>Av. Winston Churchill, 3000, Pinheirinho, Curitiba, PR</td>
+      <td>1.6 km</td>
+      <td>4 mins</td>
+      <td>4 mins</td>
+      <td>Trânsito livre</td>
+      <td>1.6 km</td>
+      <td>9 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Água Verde</td>
+      <td>Av. Água Verde, 1, Água Verde, Curitiba, PR</td>
+      <td>Av. Água Verde, 1500, Vila Izabel, Curitiba, PR</td>
+      <td>1.5 km</td>
+      <td>3 mins</td>
+      <td>5 mins</td>
+      <td>Trânsito pesado</td>
+      <td>2.1 km</td>
+      <td>18 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Cândido de Abreu</td>
+      <td>Av. Cândido de Abreu, 1, Centro Cívico, Curitiba, PR</td>
+      <td>Av. Cândido de Abreu, 800, Centro Cívico, Curitiba, PR</td>
+      <td>1.2 km</td>
+      <td>4 mins</td>
+      <td>5 mins</td>
+      <td>Trânsito leve</td>
+      <td>1.3 km</td>
+      <td>9 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Pres. Getúlio Vargas</td>
+      <td>Av. Pres. Getúlio Vargas, 1, Rebouças, Curitiba, PR</td>
+      <td>Av. Pres. Getúlio Vargas, 4500, Portão, Curitiba, PR</td>
+      <td>5.5 km</td>
+      <td>15 mins</td>
+      <td>15 mins</td>
+      <td>Trânsito livre</td>
+      <td>5.8 km</td>
+      <td>25 mins</td>
+    </tr>
+    <tr>
+      <td>Avenida Pref. Erasto Gaertner</td>
+      <td>Av. Pref. Erasto Gaertner, 1, Bacacheri, Curitiba, PR</td>
+      <td>Av. Pref. Erasto Gaertner, 1500, Bacacheri, Curitiba, PR</td>
+      <td>0.4 km</td>
+      <td>1 min</td>
+      <td>1 min</td>
+      <td>Trânsito livre</td>
+      <td>0.4 km</td>
+      <td>5 mins</td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+    
+</body>
+<script>
+    
+    
+            var map_33df50edc92a0deee8abd50d014fdbfb = L.map(
+                "map_33df50edc92a0deee8abd50d014fdbfb",
+                {
+                    center: [-25.4295963, -49.2712724],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7a8fad095fd790c3635b0f68fc701f04 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7a8fad095fd790c3635b0f68fc701f04.addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+            var poly_line_be597da090cc3d63efe1b3835f79d758 = L.polyline(
+                [[-25.43048, -49.27223], [-25.43039, -49.27226], [-25.43036, -49.27231], [-25.43028, -49.27242], [-25.43058, -49.27314], [-25.43109, -49.27289], [-25.43229, -49.27232], [-25.43244, -49.27224], [-25.43261, -49.27251], [-25.43272, -49.2727], [-25.43279, -49.27282], [-25.4332, -49.27263], [-25.43406, -49.27224], [-25.4367, -49.27103], [-25.43822, -49.27031], [-25.43898, -49.26996], [-25.44045, -49.26928], [-25.44186, -49.26862], [-25.44269, -49.26824], [-25.44413, -49.26757], [-25.44639, -49.26652], [-25.44748, -49.26601], [-25.45068, -49.2645], [-25.45311, -49.26338], [-25.4546, -49.26268], [-25.45565, -49.26224], [-25.4562, -49.26197], [-25.45722, -49.26149], [-25.45873, -49.26071], [-25.46052, -49.25984], [-25.46354, -49.25833], [-25.46496, -49.25764], [-25.46435, -49.25614], [-25.46424, -49.25586], [-25.4644, -49.25578], [-25.4649, -49.25554], [-25.4655, -49.25524], [-25.46633, -49.2548], [-25.46672, -49.25459], [-25.46713, -49.25433], [-25.46765, -49.25407], [-25.46846, -49.25369], [-25.46954, -49.25317], [-25.47006, -49.25293], [-25.47055, -49.25271], [-25.471, -49.2525], [-25.4714, -49.25234], [-25.47175, -49.25217], [-25.47328, -49.25142], [-25.4741, -49.25104], [-25.47539, -49.25047], [-25.47765, -49.24935], [-25.47878, -49.24879], [-25.47991, -49.24819], [-25.48091, -49.24772], [-25.48222, -49.24711], [-25.48399, -49.24624], [-25.48653, -49.24502], [-25.4884, -49.24408], [-25.49023, -49.24319], [-25.4919, -49.24236], [-25.49299, -49.2418], [-25.49421, -49.24123], [-25.49573, -49.2405], [-25.49626, -49.24026], [-25.49752, -49.23961]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_7e45d2142caff8315c17b008ff32d2fa = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f874c0adbeb79d4aec95d56096b623d2 = $(<div id="html_f874c0adbeb79d4aec95d56096b623d2" style="width: 100.0%; height: 100.0%;"><b>Avenida Marechal Floriano Peixoto</b><br>Modo: Carro<br>Distância: 8.5 km<br>Duração (sem trânsito): 21 mins<br>Duração (com trânsito): 25 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_7e45d2142caff8315c17b008ff32d2fa.setContent(html_f874c0adbeb79d4aec95d56096b623d2);
+            
+        
+
+        poly_line_be597da090cc3d63efe1b3835f79d758.bindPopup(popup_7e45d2142caff8315c17b008ff32d2fa)
+        ;
+
+        
+    
+    
+            poly_line_be597da090cc3d63efe1b3835f79d758.bindTooltip(
+                <div>
+                     Avenida Marechal Floriano Peixoto - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_641330097a8991716ba4da9c0efa7f35 = L.polyline(
+                [[-25.43048, -49.27223], [-25.43109, -49.27289], [-25.43135, -49.27276], [-25.43138, -49.27284], [-25.43135, -49.27276], [-25.43155, -49.27267], [-25.43244, -49.27224], [-25.43338, -49.27181], [-25.43346, -49.27203], [-25.43341, -49.27205], [-25.43346, -49.27203], [-25.43338, -49.27181], [-25.43372, -49.27163], [-25.43423, -49.27139], [-25.43391, -49.27058], [-25.43378, -49.27023], [-25.43372, -49.27026], [-25.43378, -49.27023], [-25.43386, -49.27045], [-25.43389, -49.27055], [-25.43391, -49.27058], [-25.43441, -49.27034], [-25.43528, -49.26991], [-25.43608, -49.26954], [-25.43695, -49.26909], [-25.4383, -49.26843], [-25.43909, -49.26805], [-25.44042, -49.26739], [-25.44212, -49.26656], [-25.44287, -49.26614], [-25.44347, -49.26583], [-25.44414, -49.2655], [-25.44548, -49.26485], [-25.44681, -49.2642], [-25.44878, -49.26323], [-25.45017, -49.26256], [-25.45174, -49.26183], [-25.45405, -49.26071], [-25.45734, -49.25911], [-25.45852, -49.25853], [-25.45913, -49.25822], [-25.46231, -49.25669], [-25.4648, -49.25545], [-25.46563, -49.25505], [-25.46609, -49.25481], [-25.46634, -49.25464], [-25.46704, -49.25426], [-25.46825, -49.25371], [-25.46908, -49.25331], [-25.47062, -49.25261], [-25.47144, -49.25222], [-25.47298, -49.25144], [-25.4742, -49.25088], [-25.47534, -49.25035], [-25.47646, -49.24979], [-25.47819, -49.24895], [-25.48024, -49.24791], [-25.48101, -49.24754], [-25.4814, -49.24729], [-25.48265, -49.24667], [-25.48274, -49.24667], [-25.48286, -49.24666], [-25.48364, -49.24628], [-25.48467, -49.24578], [-25.48545, -49.2454], [-25.48665, -49.2448], [-25.48838, -49.24397], [-25.49018, -49.24307], [-25.49301, -49.2417], [-25.49575, -49.24035], [-25.4962, -49.24013], [-25.49622, -49.24017], [-25.49626, -49.24026], [-25.4967, -49.24003], [-25.49752, -49.23961]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_2a07eb2c984e1e77277ef722a1773c91 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e361c594aa39064e1c5dcb6aaf2dd9a6 = $(<div id="html_e361c594aa39064e1c5dcb6aaf2dd9a6" style="width: 100.0%; height: 100.0%;"><b>Avenida Marechal Floriano Peixoto</b><br>Modo: Ônibus<br>Distância: 8.4 km<br>Duração (sem trânsito): 39 mins<br>(Somente ônibus)</div>)[0];
+                popup_2a07eb2c984e1e77277ef722a1773c91.setContent(html_e361c594aa39064e1c5dcb6aaf2dd9a6);
+            
+        
+
+        poly_line_641330097a8991716ba4da9c0efa7f35.bindPopup(popup_2a07eb2c984e1e77277ef722a1773c91)
+        ;
+
+        
+    
+    
+            poly_line_641330097a8991716ba4da9c0efa7f35.bindTooltip(
+                <div>
+                     Avenida Marechal Floriano Peixoto - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_821a44653c9aa3c4d0ae14346df7c99e = L.polyline(
+                [[-25.42645, -49.24231], [-25.42661, -49.24225], [-25.42664, -49.24228], [-25.42669, -49.24232], [-25.42703, -49.24237], [-25.42757, -49.24242], [-25.42764, -49.24242], [-25.42764, -49.24245], [-25.42763, -49.24256], [-25.42761, -49.24302], [-25.42752, -49.24419], [-25.42741, -49.2456], [-25.42716, -49.2485], [-25.42691, -49.25138], [-25.42675, -49.25333], [-25.4266, -49.2551], [-25.42692, -49.25514], [-25.42952, -49.25544], [-25.43145, -49.25564], [-25.43165, -49.25566], [-25.43196, -49.25643], [-25.4322, -49.25705], [-25.43239, -49.25759], [-25.43239, -49.25766], [-25.43271, -49.25844], [-25.43315, -49.25959], [-25.4332, -49.25971], [-25.43358, -49.2607], [-25.43379, -49.26121], [-25.43432, -49.26256], [-25.43475, -49.26367], [-25.43478, -49.26375], [-25.43493, -49.26379], [-25.43534, -49.26481], [-25.4358, -49.266], [-25.43667, -49.26821], [-25.43761, -49.2706], [-25.4386, -49.27311], [-25.43964, -49.27575], [-25.44132, -49.28001], [-25.44167, -49.28089], [-25.44163, -49.28113], [-25.44183, -49.28161], [-25.44209, -49.28229], [-25.44237, -49.28305], [-25.44278, -49.28406]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_ec846de21d696174bf818fd6d6bebdc9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9145b7f3e520f8ed9bf0f1637f2582a4 = $(<div id="html_9145b7f3e520f8ed9bf0f1637f2582a4" style="width: 100.0%; height: 100.0%;"><b>Avenida Visconde de Guarapuava</b><br>Modo: Carro<br>Distância: 5.1 km<br>Duração (sem trânsito): 13 mins<br>Duração (com trânsito): 16 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_ec846de21d696174bf818fd6d6bebdc9.setContent(html_9145b7f3e520f8ed9bf0f1637f2582a4);
+            
+        
+
+        poly_line_821a44653c9aa3c4d0ae14346df7c99e.bindPopup(popup_ec846de21d696174bf818fd6d6bebdc9)
+        ;
+
+        
+    
+    
+            poly_line_821a44653c9aa3c4d0ae14346df7c99e.bindTooltip(
+                <div>
+                     Avenida Visconde de Guarapuava - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a369df4db3a0f0a83a1209db84d5b9a2 = L.polyline(
+                [[-25.42645, -49.24231], [-25.42659, -49.24261], [-25.42691, -49.24354], [-25.42756, -49.2436], [-25.42753, -49.24403], [-25.42749, -49.24403], [-25.42753, -49.24403], [-25.42752, -49.24419], [-25.42748, -49.24477], [-25.42733, -49.24641], [-25.42723, -49.24768], [-25.42701, -49.2502], [-25.42682, -49.25254], [-25.4266, -49.2551], [-25.42638, -49.25767], [-25.42628, -49.259], [-25.42635, -49.25928], [-25.42659, -49.25991], [-25.42712, -49.26117], [-25.42723, -49.2615], [-25.42745, -49.26202], [-25.42763, -49.2625], [-25.42792, -49.26323], [-25.42834, -49.2644], [-25.42883, -49.26564], [-25.42906, -49.26624], [-25.42902, -49.26626], [-25.42906, -49.26624], [-25.43002, -49.26763], [-25.43, -49.26757], [-25.43029, -49.26744], [-25.43051, -49.26741], [-25.4313, -49.26733], [-25.43165, -49.26723], [-25.43379, -49.2662], [-25.43544, -49.26543], [-25.43682, -49.26479], [-25.43689, -49.26476], [-25.43719, -49.26553], [-25.43763, -49.2667], [-25.4383, -49.26843], [-25.4389, -49.26999], [-25.43933, -49.27111], [-25.43967, -49.27203], [-25.43961, -49.27205], [-25.43976, -49.27242], [-25.43999, -49.27302], [-25.44006, -49.27298], [-25.44039, -49.27387], [-25.44068, -49.27464], [-25.44088, -49.27516], [-25.44149, -49.27672], [-25.44215, -49.27847], [-25.44278, -49.2801], [-25.44368, -49.28244], [-25.44445, -49.28445], [-25.44483, -49.28545], [-25.44487, -49.28556], [-25.44481, -49.28559], [-25.44479, -49.28554], [-25.44439, -49.28447], [-25.44377, -49.28473], [-25.44316, -49.28501], [-25.44295, -49.28446], [-25.44278, -49.28406]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_84887df03a9c735a18c1009843274440 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_58e31836763caaefec50c2383bdd694d = $(<div id="html_58e31836763caaefec50c2383bdd694d" style="width: 100.0%; height: 100.0%;"><b>Avenida Visconde de Guarapuava</b><br>Modo: Ônibus<br>Distância: 6.2 km<br>Duração (sem trânsito): 31 mins<br>(Somente ônibus)</div>)[0];
+                popup_84887df03a9c735a18c1009843274440.setContent(html_58e31836763caaefec50c2383bdd694d);
+            
+        
+
+        poly_line_a369df4db3a0f0a83a1209db84d5b9a2.bindPopup(popup_84887df03a9c735a18c1009843274440)
+        ;
+
+        
+    
+    
+            poly_line_a369df4db3a0f0a83a1209db84d5b9a2.bindTooltip(
+                <div>
+                     Avenida Visconde de Guarapuava - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4f3100ea39b7edf1461c7c91f91b927a = L.polyline(
+                [[-25.4363, -49.26302], [-25.43603, -49.26233], [-25.43582, -49.26174], [-25.43579, -49.26161], [-25.4358, -49.26132], [-25.43581, -49.26121], [-25.4362, -49.26103], [-25.43648, -49.2609], [-25.43675, -49.26077], [-25.43712, -49.26056], [-25.43701, -49.26028], [-25.43655, -49.26026], [-25.4363, -49.26023], [-25.43608, -49.26025], [-25.43592, -49.26026], [-25.4358, -49.26033], [-25.43557, -49.26035], [-25.43528, -49.26042], [-25.43516, -49.26047], [-25.43438, -49.26083], [-25.43387, -49.26107], [-25.4339, -49.26116], [-25.43405, -49.26155], [-25.43429, -49.26218], [-25.43478, -49.26339], [-25.4358, -49.266], [-25.43814, -49.27194], [-25.43921, -49.27465], [-25.43964, -49.27575], [-25.44063, -49.27827], [-25.44167, -49.28089], [-25.44163, -49.28113], [-25.44183, -49.28161], [-25.44209, -49.28229], [-25.44215, -49.28243], [-25.44233, -49.28255], [-25.44281, -49.2838], [-25.44348, -49.28551], [-25.44412, -49.28713], [-25.44425, -49.28747], [-25.44418, -49.28763], [-25.44438, -49.28814], [-25.44542, -49.29077], [-25.44612, -49.29258], [-25.44626, -49.29266], [-25.44637, -49.2927], [-25.44744, -49.29253], [-25.44754, -49.29251], [-25.44775, -49.29306], [-25.44782, -49.29322], [-25.44831, -49.29455], [-25.44868, -49.29551]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_c5a60597a4ecdf91289058af8c449226 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ae23dd059ba474538b1421fc2a4b7abe = $(<div id="html_ae23dd059ba474538b1421fc2a4b7abe" style="width: 100.0%; height: 100.0%;"><b>Avenida Sete de Setembro</b><br>Modo: Carro<br>Distância: 4.7 km<br>Duração (sem trânsito): 14 mins<br>Duração (com trânsito): 16 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_c5a60597a4ecdf91289058af8c449226.setContent(html_ae23dd059ba474538b1421fc2a4b7abe);
+            
+        
+
+        poly_line_4f3100ea39b7edf1461c7c91f91b927a.bindPopup(popup_c5a60597a4ecdf91289058af8c449226)
+        ;
+
+        
+    
+    
+            poly_line_4f3100ea39b7edf1461c7c91f91b927a.bindTooltip(
+                <div>
+                     Avenida Sete de Setembro - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1920b1071b6e9a4e040a9ec0fa682142 = L.polyline(
+                [[-25.4363, -49.26302], [-25.43653, -49.26356], [-25.43645, -49.26359], [-25.43575, -49.26395], [-25.43506, -49.26429], [-25.43499, -49.26432], [-25.43522, -49.26488], [-25.43519, -49.26493], [-25.43523, -49.26491], [-25.43544, -49.26543], [-25.43564, -49.26593], [-25.43588, -49.26655], [-25.43618, -49.26729], [-25.43687, -49.26906], [-25.43706, -49.26952], [-25.4375, -49.27065], [-25.43814, -49.27228], [-25.43889, -49.27419], [-25.43979, -49.27646], [-25.44095, -49.27941], [-25.44163, -49.28113], [-25.44201, -49.2821], [-25.44215, -49.28243], [-25.44237, -49.28305], [-25.44277, -49.28402], [-25.44299, -49.28457], [-25.4434, -49.28561], [-25.44378, -49.28658], [-25.44392, -49.28666], [-25.44412, -49.28713], [-25.44428, -49.28756], [-25.44482, -49.28893], [-25.44547, -49.29057], [-25.44623, -49.29251], [-25.44629, -49.29258], [-25.44633, -49.29259], [-25.44641, -49.29259], [-25.44663, -49.29253], [-25.44716, -49.29228], [-25.44718, -49.29234], [-25.44716, -49.29228], [-25.4474, -49.29216], [-25.44782, -49.29322], [-25.44868, -49.29551]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_65ca23196f3ebb6c799dc20a2c3ba05d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f68b89431bf6f5603b2bbdc82493cca = $(<div id="html_9f68b89431bf6f5603b2bbdc82493cca" style="width: 100.0%; height: 100.0%;"><b>Avenida Sete de Setembro</b><br>Modo: Ônibus<br>Distância: 3.9 km<br>Duração (sem trânsito): 19 mins<br>(Somente ônibus)</div>)[0];
+                popup_65ca23196f3ebb6c799dc20a2c3ba05d.setContent(html_9f68b89431bf6f5603b2bbdc82493cca);
+            
+        
+
+        poly_line_1920b1071b6e9a4e040a9ec0fa682142.bindPopup(popup_65ca23196f3ebb6c799dc20a2c3ba05d)
+        ;
+
+        
+    
+    
+            poly_line_1920b1071b6e9a4e040a9ec0fa682142.bindTooltip(
+                <div>
+                     Avenida Sete de Setembro - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_eae78eaaacc925f262d38e17546fa4aa = L.polyline(
+                [[-25.44668, -49.28743], [-25.44663, -49.28737], [-25.44617, -49.28663], [-25.44592, -49.28623], [-25.4466, -49.28591], [-25.44642, -49.28544], [-25.44635, -49.28525], [-25.44638, -49.28501], [-25.44632, -49.28483], [-25.44681, -49.28461], [-25.4478, -49.28416], [-25.44802, -49.28478], [-25.44849, -49.28612], [-25.44884, -49.28703], [-25.44956, -49.28899], [-25.45025, -49.29086], [-25.45106, -49.29043], [-25.45188, -49.29001], [-25.45234, -49.28981], [-25.45274, -49.2896], [-25.45292, -49.28952], [-25.45317, -49.28942], [-25.45333, -49.2894], [-25.45343, -49.28941], [-25.45377, -49.28946], [-25.45504, -49.28973], [-25.45956, -49.29066], [-25.46187, -49.29114], [-25.46291, -49.29138], [-25.46456, -49.2918], [-25.4648, -49.29186], [-25.46491, -49.292], [-25.46518, -49.29232], [-25.46583, -49.29323], [-25.46602, -49.29352], [-25.46677, -49.29465], [-25.46701, -49.29496], [-25.46722, -49.29518], [-25.46745, -49.29534], [-25.46765, -49.29543], [-25.468, -49.29554], [-25.46863, -49.29561], [-25.46892, -49.29568], [-25.46914, -49.29569], [-25.46977, -49.29555], [-25.47066, -49.2953], [-25.47095, -49.29525], [-25.47149, -49.29522], [-25.47215, -49.29525], [-25.47243, -49.29528], [-25.47273, -49.29537], [-25.473, -49.29548], [-25.47382, -49.2958], [-25.47414, -49.29583], [-25.47464, -49.2958], [-25.47628, -49.29575], [-25.47822, -49.29571], [-25.48051, -49.29566], [-25.4822, -49.29559], [-25.4828, -49.29558], [-25.4835, -49.29558], [-25.48362, -49.29561], [-25.4839, -49.29573], [-25.48447, -49.296], [-25.48531, -49.2964], [-25.48608, -49.29675], [-25.48633, -49.29685], [-25.48659, -49.29685], [-25.48718, -49.29683], [-25.48726, -49.29683], [-25.48726, -49.29615], [-25.48726, -49.29494], [-25.48726, -49.29443], [-25.48732, -49.29442]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_fbd056e65f7e1dfb1267eb6bcadf5819 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d68a87c617196adf1e9032f1a09fabd4 = $(<div id="html_d68a87c617196adf1e9032f1a09fabd4" style="width: 100.0%; height: 100.0%;"><b>Avenida República Argentina</b><br>Modo: Carro<br>Distância: 5.9 km<br>Duração (sem trânsito): 14 mins<br>Duração (com trânsito): 16 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_fbd056e65f7e1dfb1267eb6bcadf5819.setContent(html_d68a87c617196adf1e9032f1a09fabd4);
+            
+        
+
+        poly_line_eae78eaaacc925f262d38e17546fa4aa.bindPopup(popup_fbd056e65f7e1dfb1267eb6bcadf5819)
+        ;
+
+        
+    
+    
+            poly_line_eae78eaaacc925f262d38e17546fa4aa.bindTooltip(
+                <div>
+                     Avenida República Argentina - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ee0a1c6ca7b8967e3d1339da2851d1ec = L.polyline(
+                [[-25.44668, -49.28743], [-25.44677, -49.28747], [-25.44735, -49.28758], [-25.44742, -49.28777], [-25.44823, -49.28789], [-25.44831, -49.2879], [-25.44831, -49.28787], [-25.44833, -49.28783], [-25.44858, -49.28787], [-25.44918, -49.28797], [-25.4499, -49.288], [-25.45121, -49.28803], [-25.45198, -49.28795], [-25.45237, -49.2879], [-25.45294, -49.28784], [-25.45314, -49.28784], [-25.45363, -49.28794], [-25.45393, -49.28801], [-25.45448, -49.28811], [-25.45558, -49.28834], [-25.45631, -49.28849], [-25.45738, -49.28869], [-25.45894, -49.28898], [-25.45927, -49.28905], [-25.45963, -49.28916], [-25.46041, -49.28949], [-25.46118, -49.28984], [-25.46185, -49.29015], [-25.46303, -49.29064], [-25.4643, -49.29114], [-25.46569, -49.29169], [-25.46588, -49.29178], [-25.46635, -49.29213], [-25.46751, -49.29306], [-25.46825, -49.29365], [-25.46866, -49.29384], [-25.46891, -49.29394], [-25.46981, -49.29428], [-25.47021, -49.29438], [-25.47046, -49.2944], [-25.4714, -49.29441], [-25.47286, -49.29442], [-25.47319, -49.29436], [-25.4733, -49.29431], [-25.47368, -49.29405], [-25.47402, -49.29379], [-25.47429, -49.29362], [-25.47457, -49.29348], [-25.47556, -49.29298], [-25.47583, -49.29285], [-25.47597, -49.29282], [-25.4764, -49.29265], [-25.47672, -49.2925], [-25.47674, -49.29247], [-25.47682, -49.29249], [-25.47686, -49.29249], [-25.47781, -49.29215], [-25.4779, -49.29211], [-25.47804, -49.29211], [-25.4786, -49.29215], [-25.47929, -49.29222], [-25.47955, -49.29225], [-25.47982, -49.29232], [-25.4802, -49.29244], [-25.48038, -49.2925], [-25.48073, -49.29254], [-25.48112, -49.29258], [-25.48114, -49.29258], [-25.48146, -49.29263], [-25.4825, -49.293], [-25.48357, -49.29341], [-25.48443, -49.29375], [-25.4844, -49.29383], [-25.48478, -49.29397], [-25.48549, -49.29417], [-25.48659, -49.29437], [-25.48691, -49.29443], [-25.48714, -49.29444], [-25.48732, -49.29442]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_c6c5bddabf49f7de672c3a31d1771c41 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8b5191b8bb0f7478859b8fb02c12e3ee = $(<div id="html_8b5191b8bb0f7478859b8fb02c12e3ee" style="width: 100.0%; height: 100.0%;"><b>Avenida República Argentina</b><br>Modo: Ônibus<br>Distância: 4.8 km<br>Duração (sem trânsito): 24 mins<br>(Somente ônibus)</div>)[0];
+                popup_c6c5bddabf49f7de672c3a31d1771c41.setContent(html_8b5191b8bb0f7478859b8fb02c12e3ee);
+            
+        
+
+        poly_line_ee0a1c6ca7b8967e3d1339da2851d1ec.bindPopup(popup_c6c5bddabf49f7de672c3a31d1771c41)
+        ;
+
+        
+    
+    
+            poly_line_ee0a1c6ca7b8967e3d1339da2851d1ec.bindTooltip(
+                <div>
+                     Avenida República Argentina - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0ac26c8c5a801387c9fceb8bab115432 = L.polyline(
+                [[-25.46624, -49.27957], [-25.46667, -49.28007], [-25.46751, -49.28099], [-25.4683, -49.28187], [-25.47072, -49.28457]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_d5465900f7fa9901881e3ad8cab7499a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1ad680c86f6a8eb4927e4e40c467caaf = $(<div id="html_1ad680c86f6a8eb4927e4e40c467caaf" style="width: 100.0%; height: 100.0%;"><b>Avenida Presidente Kennedy</b><br>Modo: Carro<br>Distância: 0.7 km<br>Duração (sem trânsito): 1 min<br>Duração (com trânsito): 1 min<br>Condição: Trânsito livre</div>)[0];
+                popup_d5465900f7fa9901881e3ad8cab7499a.setContent(html_1ad680c86f6a8eb4927e4e40c467caaf);
+            
+        
+
+        poly_line_0ac26c8c5a801387c9fceb8bab115432.bindPopup(popup_d5465900f7fa9901881e3ad8cab7499a)
+        ;
+
+        
+    
+    
+            poly_line_0ac26c8c5a801387c9fceb8bab115432.bindTooltip(
+                <div>
+                     Avenida Presidente Kennedy - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6dcb73857dc81c46bbb341abd0035818 = L.polyline(
+                [[-25.46631, -49.27976], [-25.46636, -49.27971], [-25.46662, -49.28001], [-25.46718, -49.2806], [-25.46818, -49.28174], [-25.46919, -49.28286], [-25.46968, -49.28342], [-25.46999, -49.28375], [-25.46995, -49.28379], [-25.46999, -49.28375], [-25.47017, -49.28394], [-25.47072, -49.28457]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_101cd5feca5158b20418c2b21f981845 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f93130a353f2dfceb9f57b4ba1a7dea1 = $(<div id="html_f93130a353f2dfceb9f57b4ba1a7dea1" style="width: 100.0%; height: 100.0%;"><b>Avenida Presidente Kennedy</b><br>Modo: Ônibus<br>Distância: 0.7 km<br>Duração (sem trânsito): 4 mins<br>(Somente ônibus)</div>)[0];
+                popup_101cd5feca5158b20418c2b21f981845.setContent(html_f93130a353f2dfceb9f57b4ba1a7dea1);
+            
+        
+
+        poly_line_6dcb73857dc81c46bbb341abd0035818.bindPopup(popup_101cd5feca5158b20418c2b21f981845)
+        ;
+
+        
+    
+    
+            poly_line_6dcb73857dc81c46bbb341abd0035818.bindTooltip(
+                <div>
+                     Avenida Presidente Kennedy - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0b08f152e3da588d302635baad8afe46 = L.polyline(
+                [[-25.4409, -49.26592], [-25.44132, -49.2669], [-25.44161, -49.26765], [-25.44178, -49.26813], [-25.44198, -49.26857], [-25.44223, -49.26931], [-25.44234, -49.26956], [-25.44247, -49.26994], [-25.44296, -49.27118], [-25.4433, -49.27207], [-25.44408, -49.27413], [-25.44472, -49.27578], [-25.4454, -49.2776], [-25.44583, -49.27877], [-25.44582, -49.27882], [-25.44589, -49.279], [-25.44621, -49.27987], [-25.44663, -49.28101], [-25.44816, -49.28517], [-25.44915, -49.28789], [-25.44926, -49.28818]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_1dec0fd4a2cdc3e00955f5864c333316 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1aaf57447430c41bcf3c49bbb119340a = $(<div id="html_1aaf57447430c41bcf3c49bbb119340a" style="width: 100.0%; height: 100.0%;"><b>Avenida Iguaçu</b><br>Modo: Carro<br>Distância: 2.4 km<br>Duração (sem trânsito): 7 mins<br>Duração (com trânsito): 7 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_1dec0fd4a2cdc3e00955f5864c333316.setContent(html_1aaf57447430c41bcf3c49bbb119340a);
+            
+        
+
+        poly_line_0b08f152e3da588d302635baad8afe46.bindPopup(popup_1dec0fd4a2cdc3e00955f5864c333316)
+        ;
+
+        
+    
+    
+            poly_line_0b08f152e3da588d302635baad8afe46.bindTooltip(
+                <div>
+                     Avenida Iguaçu - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_fdc18f58a59edfaeccdb1292edabebf4 = L.polyline(
+                [[-25.4409, -49.26592], [-25.44105, -49.2663], [-25.44097, -49.26648], [-25.44114, -49.26682], [-25.44121, -49.26695], [-25.44145, -49.26754], [-25.44176, -49.26835], [-25.44186, -49.2683], [-25.44198, -49.26857], [-25.44223, -49.26931], [-25.44234, -49.26956], [-25.44247, -49.26994], [-25.44296, -49.27118], [-25.44371, -49.27315], [-25.4454, -49.2776], [-25.44583, -49.27877], [-25.44582, -49.27882], [-25.44589, -49.279], [-25.44621, -49.27987], [-25.44663, -49.28101], [-25.44816, -49.28517], [-25.44825, -49.28542], [-25.44831, -49.28539], [-25.44824, -49.28541], [-25.44849, -49.28612], [-25.44884, -49.28703], [-25.44918, -49.28797], [-25.44926, -49.28818]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_b45570f3e7ce87361db7368857ea25fc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1a4d522d3cfc86e26c874902bacb0467 = $(<div id="html_1a4d522d3cfc86e26c874902bacb0467" style="width: 100.0%; height: 100.0%;"><b>Avenida Iguaçu</b><br>Modo: Ônibus<br>Distância: 2.4 km<br>Duração (sem trânsito): 15 mins<br>(Somente ônibus)</div>)[0];
+                popup_b45570f3e7ce87361db7368857ea25fc.setContent(html_1a4d522d3cfc86e26c874902bacb0467);
+            
+        
+
+        poly_line_fdc18f58a59edfaeccdb1292edabebf4.bindPopup(popup_b45570f3e7ce87361db7368857ea25fc)
+        ;
+
+        
+    
+    
+            poly_line_fdc18f58a59edfaeccdb1292edabebf4.bindTooltip(
+                <div>
+                     Avenida Iguaçu - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_14c7f1533e142593d494e3e893b451aa = L.polyline(
+                [[-25.43739, -49.25332], [-25.43712, -49.25361], [-25.43689, -49.25378], [-25.43669, -49.25389], [-25.43656, -49.25402], [-25.43634, -49.25376], [-25.43616, -49.25352], [-25.43608, -49.25341], [-25.43601, -49.25326], [-25.43597, -49.25306], [-25.43595, -49.25288], [-25.43596, -49.25114], [-25.43593, -49.24995], [-25.43645, -49.24969], [-25.4372, -49.24935], [-25.43786, -49.24906], [-25.43805, -49.24962], [-25.43837, -49.25047], [-25.43876, -49.25145], [-25.43922, -49.2526], [-25.43925, -49.25268], [-25.43959, -49.25261], [-25.44041, -49.25246], [-25.44063, -49.25239], [-25.44132, -49.25188], [-25.44184, -49.25146], [-25.44227, -49.25118], [-25.44306, -49.25062], [-25.44363, -49.25017], [-25.44473, -49.24935], [-25.44543, -49.24886], [-25.44623, -49.24827], [-25.44711, -49.24757], [-25.44733, -49.24738], [-25.44763, -49.24716], [-25.44824, -49.24673], [-25.4486, -49.24648], [-25.44898, -49.24625], [-25.44988, -49.2456], [-25.45066, -49.24506], [-25.45101, -49.24486], [-25.45267, -49.2436], [-25.45298, -49.24338], [-25.45356, -49.24294], [-25.45447, -49.24229], [-25.45525, -49.24171], [-25.45543, -49.24156], [-25.45578, -49.24131], [-25.45688, -49.24052], [-25.45731, -49.2402], [-25.45887, -49.23907], [-25.45967, -49.23849], [-25.46158, -49.23709], [-25.46339, -49.23576], [-25.46379, -49.23545], [-25.46398, -49.23535], [-25.46497, -49.23461], [-25.46572, -49.23401], [-25.46636, -49.23356], [-25.46695, -49.23319], [-25.4673, -49.23292], [-25.46774, -49.23258], [-25.46811, -49.23232], [-25.46916, -49.23154], [-25.47017, -49.2308], [-25.47064, -49.23048], [-25.47093, -49.23027]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_65e730091c072bb02a6c91e912984506 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8eb50f36b53535fd91d06743f0d13937 = $(<div id="html_8eb50f36b53535fd91d06743f0d13937" style="width: 100.0%; height: 100.0%;"><b>Avenida Comendador Franco (Av. das Torres)</b><br>Modo: Carro<br>Distância: 5.4 km<br>Duração (sem trânsito): 9 mins<br>Duração (com trânsito): 9 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_65e730091c072bb02a6c91e912984506.setContent(html_8eb50f36b53535fd91d06743f0d13937);
+            
+        
+
+        poly_line_14c7f1533e142593d494e3e893b451aa.bindPopup(popup_65e730091c072bb02a6c91e912984506)
+        ;
+
+        
+    
+    
+            poly_line_14c7f1533e142593d494e3e893b451aa.bindTooltip(
+                <div>
+                     Avenida Comendador Franco (Av. das Torres) - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5626c2aaffb7d3f5ae366b8069c40c23 = L.polyline(
+                [[-25.43739, -49.25332], [-25.4377, -49.25297], [-25.43777, -49.25303], [-25.43783, -49.25304], [-25.43791, -49.25304], [-25.43798, -49.253], [-25.43812, -49.25291], [-25.43828, -49.25283], [-25.43881, -49.25273], [-25.43925, -49.25268], [-25.43959, -49.25261], [-25.44041, -49.25246], [-25.44063, -49.25239], [-25.44132, -49.25188], [-25.44184, -49.25146], [-25.44227, -49.25118], [-25.44263, -49.25092], [-25.44273, -49.25084], [-25.44275, -49.2509], [-25.44272, -49.25085], [-25.44296, -49.25068], [-25.44316, -49.25055], [-25.44393, -49.24995], [-25.44498, -49.24918], [-25.44589, -49.24853], [-25.44711, -49.24757], [-25.44733, -49.24738], [-25.44763, -49.24716], [-25.44805, -49.24686], [-25.44842, -49.2466], [-25.44888, -49.24632], [-25.4497, -49.24573], [-25.4503, -49.24531], [-25.45066, -49.24506], [-25.45101, -49.24486], [-25.45284, -49.24348], [-25.45313, -49.24326], [-25.45447, -49.24229], [-25.45525, -49.24171], [-25.45543, -49.24156], [-25.45614, -49.24106], [-25.45688, -49.24052], [-25.45714, -49.24033], [-25.45752, -49.24005], [-25.45827, -49.23951], [-25.45903, -49.23895], [-25.45967, -49.23849], [-25.46158, -49.23709], [-25.46276, -49.23623], [-25.4635, -49.23566], [-25.46379, -49.23545], [-25.46389, -49.2354], [-25.46453, -49.23492], [-25.46479, -49.23473], [-25.4652, -49.23442], [-25.46572, -49.23401], [-25.46636, -49.23356], [-25.46695, -49.23319], [-25.4673, -49.23292], [-25.46774, -49.23258], [-25.46816, -49.23228], [-25.46968, -49.23114], [-25.47072, -49.23041], [-25.47104, -49.23017], [-25.47112, -49.23011], [-25.47117, -49.2302], [-25.47116, -49.23017], [-25.47093, -49.23027]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_25c2b89606925f742239a003d9d073fb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c4bd014a60ee02c49fca9311ea30993f = $(<div id="html_c4bd014a60ee02c49fca9311ea30993f" style="width: 100.0%; height: 100.0%;"><b>Avenida Comendador Franco (Av. das Torres)</b><br>Modo: Ônibus<br>Distância: 4.5 km<br>Duração (sem trânsito): 21 mins<br>(Somente ônibus)</div>)[0];
+                popup_25c2b89606925f742239a003d9d073fb.setContent(html_c4bd014a60ee02c49fca9311ea30993f);
+            
+        
+
+        poly_line_5626c2aaffb7d3f5ae366b8069c40c23.bindPopup(popup_25c2b89606925f742239a003d9d073fb)
+        ;
+
+        
+    
+    
+            poly_line_5626c2aaffb7d3f5ae366b8069c40c23.bindTooltip(
+                <div>
+                     Avenida Comendador Franco (Av. das Torres) - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_68b95fee84130b4dc38db1cac82e1a04 = L.polyline(
+                [[-25.42361, -49.26819], [-25.42372, -49.26845], [-25.42382, -49.26856], [-25.42391, -49.26862], [-25.4239, -49.26867], [-25.42388, -49.26872], [-25.42386, -49.26875], [-25.42382, -49.26877], [-25.4237, -49.26874], [-25.42352, -49.26872], [-25.4224, -49.26845], [-25.4222, -49.2684], [-25.42196, -49.26811], [-25.42187, -49.268], [-25.42169, -49.2679], [-25.42155, -49.26785], [-25.42085, -49.26764], [-25.41951, -49.26728], [-25.419, -49.26716], [-25.41902, -49.26699], [-25.41904, -49.26668], [-25.41906, -49.26634], [-25.41912, -49.26537], [-25.41922, -49.26384], [-25.41922, -49.26347], [-25.41911, -49.26313], [-25.41902, -49.26298], [-25.41885, -49.2628], [-25.41854, -49.26252], [-25.41784, -49.26183], [-25.41725, -49.2613], [-25.41528, -49.25949], [-25.41428, -49.25857], [-25.41403, -49.25891], [-25.4138, -49.25923], [-25.41358, -49.25901], [-25.41239, -49.2579], [-25.4119, -49.25745], [-25.41047, -49.25613], [-25.41027, -49.25595]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_7936b4d7c7d879bc2b29b6f9c1282a35 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e47acb83a4864b928b1fc2cb8a67d8c5 = $(<div id="html_e47acb83a4864b928b1fc2cb8a67d8c5" style="width: 100.0%; height: 100.0%;"><b>Rua João Gualberto</b><br>Modo: Carro<br>Distância: 2.4 km<br>Duração (sem trânsito): 7 mins<br>Duração (com trânsito): 7 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_7936b4d7c7d879bc2b29b6f9c1282a35.setContent(html_e47acb83a4864b928b1fc2cb8a67d8c5);
+            
+        
+
+        poly_line_68b95fee84130b4dc38db1cac82e1a04.bindPopup(popup_7936b4d7c7d879bc2b29b6f9c1282a35)
+        ;
+
+        
+    
+    
+            poly_line_68b95fee84130b4dc38db1cac82e1a04.bindTooltip(
+                <div>
+                     Rua João Gualberto - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3384823394b136b31b8ca69f48ab4e28 = L.polyline(
+                [[-25.42361, -49.26819], [-25.42349, -49.268], [-25.42357, -49.26787], [-25.42363, -49.26794], [-25.42369, -49.268], [-25.42398, -49.26831], [-25.42393, -49.26837], [-25.42391, -49.26839], [-25.42362, -49.26804], [-25.42354, -49.26793], [-25.42333, -49.26765], [-25.42304, -49.26727], [-25.42258, -49.26673], [-25.42243, -49.26663], [-25.42174, -49.26628], [-25.42094, -49.26594], [-25.4207, -49.26578], [-25.42027, -49.26537], [-25.41954, -49.26467], [-25.41903, -49.26422], [-25.41879, -49.26398], [-25.41859, -49.26377], [-25.41766, -49.26291], [-25.41683, -49.26215], [-25.4162, -49.26152], [-25.41581, -49.26118], [-25.41555, -49.26099], [-25.41533, -49.26077], [-25.41453, -49.26002], [-25.41325, -49.2588], [-25.41197, -49.25763], [-25.41114, -49.25687], [-25.41072, -49.25647], [-25.41039, -49.25615], [-25.41003, -49.2558], [-25.40953, -49.25541], [-25.40922, -49.25512], [-25.40928, -49.25504], [-25.40977, -49.25549], [-25.41027, -49.25595]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_442bb05a8d11558431b48f1f59342442 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_60f73c690cd229cd8a1aabc862cf4f9c = $(<div id="html_60f73c690cd229cd8a1aabc862cf4f9c" style="width: 100.0%; height: 100.0%;"><b>Rua João Gualberto</b><br>Modo: Ônibus<br>Distância: 2.4 km<br>Duração (sem trânsito): 11 mins<br>(Somente ônibus)</div>)[0];
+                popup_442bb05a8d11558431b48f1f59342442.setContent(html_60f73c690cd229cd8a1aabc862cf4f9c);
+            
+        
+
+        poly_line_3384823394b136b31b8ca69f48ab4e28.bindPopup(popup_442bb05a8d11558431b48f1f59342442)
+        ;
+
+        
+    
+    
+            poly_line_3384823394b136b31b8ca69f48ab4e28.bindTooltip(
+                <div>
+                     Rua João Gualberto - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_585ae8c212c6813fe06aa4b748db5211 = L.polyline(
+                [[-25.42679, -49.2718], [-25.42411, -49.2712], [-25.42321, -49.27099], [-25.42232, -49.2708], [-25.42152, -49.27088], [-25.42108, -49.27093], [-25.41862, -49.27122], [-25.41755, -49.27133], [-25.41655, -49.27144], [-25.41626, -49.27145], [-25.41549, -49.2714], [-25.41472, -49.27133], [-25.41394, -49.27127], [-25.41347, -49.27127], [-25.41319, -49.27131], [-25.41272, -49.27142], [-25.41254, -49.27148], [-25.41209, -49.27169], [-25.41174, -49.27183], [-25.41155, -49.27182], [-25.41034, -49.27148], [-25.41003, -49.27146], [-25.40976, -49.27146], [-25.40952, -49.27149], [-25.40918, -49.27157], [-25.40876, -49.27169], [-25.40809, -49.27188], [-25.40795, -49.27188], [-25.40776, -49.27182], [-25.40629, -49.27117], [-25.40593, -49.27105], [-25.40571, -49.27105], [-25.40542, -49.27108], [-25.40438, -49.27124], [-25.40344, -49.27138], [-25.40307, -49.27138], [-25.4021, -49.27141], [-25.40145, -49.27143], [-25.40005, -49.27145]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_6bfcf55d757dee5126bfb570c0526163 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d76a41112dae82f21c5fda621910b38c = $(<div id="html_d76a41112dae82f21c5fda621910b38c" style="width: 100.0%; height: 100.0%;"><b>Rua Mateus Leme</b><br>Modo: Carro<br>Distância: 3.0 km<br>Duração (sem trânsito): 6 mins<br>Duração (com trânsito): 7 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_6bfcf55d757dee5126bfb570c0526163.setContent(html_d76a41112dae82f21c5fda621910b38c);
+            
+        
+
+        poly_line_585ae8c212c6813fe06aa4b748db5211.bindPopup(popup_6bfcf55d757dee5126bfb570c0526163)
+        ;
+
+        
+    
+    
+            poly_line_585ae8c212c6813fe06aa4b748db5211.bindTooltip(
+                <div>
+                     Rua Mateus Leme - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_05c2bc84835d16a7b59ca65481d171b3 = L.polyline(
+                [[-25.42752, -49.27194], [-25.42643, -49.27172], [-25.42644, -49.27165], [-25.42643, -49.27172], [-25.4252, -49.27145], [-25.42411, -49.2712], [-25.42321, -49.27099], [-25.42232, -49.2708], [-25.42152, -49.27088], [-25.41978, -49.27109], [-25.41655, -49.27144], [-25.41626, -49.27145], [-25.41549, -49.2714], [-25.41417, -49.27128], [-25.41376, -49.27126], [-25.41332, -49.27129], [-25.41289, -49.27137], [-25.41272, -49.27142], [-25.41254, -49.27148], [-25.41209, -49.27169], [-25.41174, -49.27183], [-25.41155, -49.27182], [-25.41034, -49.27148], [-25.40989, -49.27146], [-25.40952, -49.27149], [-25.40903, -49.27161], [-25.40823, -49.27186], [-25.40801, -49.27189], [-25.40791, -49.27188], [-25.40728, -49.27159], [-25.40629, -49.27117], [-25.40593, -49.27105], [-25.40571, -49.27105], [-25.40542, -49.27108], [-25.40485, -49.27117], [-25.40344, -49.27138], [-25.4028, -49.27138], [-25.40145, -49.27143], [-25.4, -49.27146], [-25.4, -49.27138]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_382d8112517c78740584141190b6afce = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1b04894d2785deb292219e01d8005042 = $(<div id="html_1b04894d2785deb292219e01d8005042" style="width: 100.0%; height: 100.0%;"><b>Rua Mateus Leme</b><br>Modo: Ônibus<br>Distância: 3.1 km<br>Duração (sem trânsito): 12 mins<br>(Somente ônibus)</div>)[0];
+                popup_382d8112517c78740584141190b6afce.setContent(html_1b04894d2785deb292219e01d8005042);
+            
+        
+
+        poly_line_05c2bc84835d16a7b59ca65481d171b3.bindPopup(popup_382d8112517c78740584141190b6afce)
+        ;
+
+        
+    
+    
+            poly_line_05c2bc84835d16a7b59ca65481d171b3.bindTooltip(
+                <div>
+                     Rua Mateus Leme - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7812ee07605c30ee6371360a850c668f = L.polyline(
+                [[-25.87655, -49.48937], [-25.87627, -49.48908], [-25.87599, -49.48868], [-25.87572, -49.48806], [-25.87562, -49.4877], [-25.87556, -49.48725], [-25.87551, -49.48687], [-25.87546, -49.48641], [-25.87545, -49.486], [-25.8753, -49.48474], [-25.87516, -49.48343], [-25.8751, -49.48293], [-25.87494, -49.48216], [-25.87433, -49.4798], [-25.87391, -49.47807], [-25.87385, -49.47753], [-25.87392, -49.47687], [-25.8744, -49.47482], [-25.8751, -49.47182], [-25.87539, -49.47042], [-25.87542, -49.46963], [-25.87533, -49.46879], [-25.87513, -49.46801], [-25.87491, -49.4675], [-25.8745, -49.46674], [-25.87391, -49.46558], [-25.87109, -49.46003], [-25.86835, -49.45469], [-25.86753, -49.45329], [-25.86665, -49.45183], [-25.86647, -49.45147], [-25.86617, -49.45078], [-25.86603, -49.45025], [-25.86585, -49.44937], [-25.86536, -49.44668], [-25.86517, -49.44563], [-25.86513, -49.44537], [-25.86512, -49.44439], [-25.86554, -49.44145], [-25.86633, -49.43615], [-25.86635, -49.43519], [-25.86624, -49.43468], [-25.86601, -49.43412], [-25.86582, -49.43378], [-25.86485, -49.4322], [-25.86472, -49.43195], [-25.86435, -49.43115], [-25.86422, -49.43031], [-25.86424, -49.42962], [-25.86456, -49.42628], [-25.86486, -49.42309], [-25.86481, -49.4222], [-25.86463, -49.4207], [-25.86442, -49.4187], [-25.86446, -49.41816], [-25.86456, -49.41757], [-25.86483, -49.41674], [-25.86569, -49.41509], [-25.86596, -49.4146], [-25.86612, -49.41421], [-25.86624, -49.4135], [-25.86622, -49.41283], [-25.86612, -49.41232], [-25.86598, -49.41193], [-25.86537, -49.411], [-25.8635, -49.4086], [-25.86224, -49.40694], [-25.86201, -49.40659], [-25.86182, -49.40611], [-25.86163, -49.40536], [-25.86161, -49.40499], [-25.8617, -49.4043], [-25.86243, -49.40137], [-25.86269, -49.40043], [-25.86291, -49.39962], [-25.86308, -49.39894], [-25.86373, -49.39651], [-25.86389, -49.39573], [-25.86404, -49.39473], [-25.86474, -49.39019], [-25.86523, -49.38702], [-25.86513, -49.38475], [-25.86517, -49.3841], [-25.86525, -49.38364], [-25.86551, -49.38288], [-25.86584, -49.38211], [-25.86671, -49.37999], [-25.86747, -49.37825], [-25.86785, -49.37712], [-25.86797, -49.3763], [-25.86796, -49.3753], [-25.86776, -49.37343], [-25.86773, -49.37259], [-25.86778, -49.37211], [-25.86789, -49.37169], [-25.86826, -49.37088], [-25.8689, -49.36975], [-25.86906, -49.36924], [-25.86912, -49.36888], [-25.86921, -49.36799], [-25.86915, -49.36717], [-25.869, -49.36657], [-25.8687, -49.36589], [-25.86833, -49.3653], [-25.86792, -49.36486], [-25.86745, -49.36445], [-25.86612, -49.36376], [-25.86307, -49.36227], [-25.86259, -49.36204], [-25.86238, -49.36189], [-25.86187, -49.36167], [-25.86052, -49.361], [-25.85978, -49.36064], [-25.85747, -49.35946], [-25.85571, -49.35859], [-25.85526, -49.35841], [-25.85461, -49.35825], [-25.85319, -49.35795], [-25.85172, -49.35762], [-25.85115, -49.35729], [-25.85098, -49.35715], [-25.84826, -49.3541], [-25.8447, -49.35002], [-25.84393, -49.34914], [-25.84296, -49.34794], [-25.84077, -49.3455], [-25.83481, -49.33867], [-25.83314, -49.33675], [-25.83276, -49.33638], [-25.8322, -49.33602], [-25.83149, -49.3358], [-25.83116, -49.33577], [-25.83063, -49.33581], [-25.82879, -49.33608], [-25.82781, -49.3362], [-25.82702, -49.3362], [-25.82649, -49.33615], [-25.82582, -49.336], [-25.82455, -49.33571], [-25.82434, -49.33567], [-25.82268, -49.33529], [-25.82176, -49.33501], [-25.82157, -49.33493], [-25.82097, -49.33458], [-25.81938, -49.33346], [-25.81905, -49.33328], [-25.81795, -49.33251], [-25.81649, -49.33147], [-25.81422, -49.32992], [-25.81338, -49.32917], [-25.81204, -49.32797], [-25.81143, -49.32741], [-25.81074, -49.32687], [-25.81023, -49.32662], [-25.80968, -49.32643], [-25.80899, -49.32636], [-25.80825, -49.32645], [-25.8077, -49.32663], [-25.80127, -49.32936], [-25.80068, -49.32956], [-25.80014, -49.32963], [-25.79963, -49.32959], [-25.79887, -49.32942], [-25.79401, -49.32826], [-25.78984, -49.32728], [-25.78741, -49.32664], [-25.78593, -49.32625], [-25.78425, -49.32582], [-25.78371, -49.32572], [-25.78316, -49.32558], [-25.78225, -49.32538], [-25.77997, -49.32489], [-25.77847, -49.32451], [-25.77778, -49.32425], [-25.77696, -49.32404], [-25.77636, -49.32398], [-25.77582, -49.32388], [-25.77308, -49.32323], [-25.77186, -49.3229], [-25.77119, -49.32274], [-25.76998, -49.32246], [-25.76714, -49.32177], [-25.76182, -49.3205], [-25.75983, -49.32002], [-25.75921, -49.31991], [-25.75776, -49.31955], [-25.75696, -49.3193], [-25.75526, -49.31848], [-25.75399, -49.31786], [-25.75295, -49.31739], [-25.75215, -49.31723], [-25.75083, -49.31719], [-25.74947, -49.31723], [-25.74856, -49.31725], [-25.74413, -49.31734], [-25.74113, -49.3174], [-25.73979, -49.31745], [-25.73441, -49.31757], [-25.73263, -49.31763], [-25.72688, -49.31775], [-25.72572, -49.31786], [-25.72424, -49.3179], [-25.72316, -49.31794], [-25.72189, -49.31795], [-25.71907, -49.31807], [-25.71726, -49.31807], [-25.71655, -49.31811], [-25.71461, -49.31805], [-25.71347, -49.31814], [-25.71311, -49.31824], [-25.71228, -49.3188], [-25.7114, -49.31955], [-25.71076, -49.32001], [-25.70979, -49.32041], [-25.70919, -49.32056], [-25.70873, -49.32062], [-25.70816, -49.32063], [-25.70698, -49.32045], [-25.70567, -49.32018], [-25.70263, -49.31955], [-25.6978, -49.31855], [-25.69361, -49.31766], [-25.69234, -49.3174], [-25.69098, -49.31715], [-25.6885, -49.31665], [-25.68616, -49.31644], [-25.68227, -49.31613], [-25.6774, -49.31578], [-25.67462, -49.31554], [-25.67161, -49.31508], [-25.66784, -49.31451], [-25.66666, -49.31437], [-25.66571, -49.31417], [-25.66142, -49.31309], [-25.6577, -49.31215], [-25.65714, -49.31204], [-25.65646, -49.31201], [-25.65445, -49.31209], [-25.65274, -49.31216], [-25.65016, -49.31235], [-25.64566, -49.3126], [-25.6439, -49.31273], [-25.63952, -49.31292], [-25.63456, -49.31324], [-25.63192, -49.3134], [-25.6308, -49.31357], [-25.6285, -49.31412], [-25.62669, -49.31466], [-25.62173, -49.31602], [-25.6154, -49.31774], [-25.61165, -49.31876], [-25.61019, -49.31913], [-25.60966, -49.3192], [-25.60878, -49.31916], [-25.60682, -49.31875], [-25.60198, -49.31764], [-25.59925, -49.31709], [-25.5962, -49.31645], [-25.59025, -49.31514], [-25.58404, -49.31377], [-25.58086, -49.31307], [-25.5768, -49.3122], [-25.57188, -49.3111], [-25.56935, -49.31035], [-25.56724, -49.30968], [-25.56578, -49.30923], [-25.56535, -49.30903], [-25.56467, -49.3088], [-25.56413, -49.30872], [-25.56364, -49.30863], [-25.56269, -49.30835], [-25.56145, -49.30796], [-25.56096, -49.30779], [-25.56029, -49.30748], [-25.55902, -49.30676], [-25.55821, -49.30646], [-25.5562, -49.306], [-25.55138, -49.30487], [-25.5472, -49.30388], [-25.54584, -49.30357], [-25.5446, -49.30325], [-25.5426, -49.30281], [-25.53832, -49.30179], [-25.53536, -49.30109], [-25.53445, -49.30085], [-25.53407, -49.3007], [-25.5331, -49.30033], [-25.5286, -49.29866], [-25.52785, -49.29832], [-25.52721, -49.29795], [-25.526, -49.29717], [-25.52432, -49.29615], [-25.52393, -49.29588], [-25.52287, -49.29528], [-25.52204, -49.29477], [-25.51993, -49.29346], [-25.51905, -49.29284], [-25.51889, -49.29268], [-25.51719, -49.29163], [-25.51649, -49.29135], [-25.51347, -49.2895], [-25.51263, -49.28894], [-25.51156, -49.2881], [-25.50884, -49.2859], [-25.5085, -49.2856], [-25.5082, -49.28522], [-25.50791, -49.28487], [-25.50691, -49.28406], [-25.50604, -49.28335], [-25.50566, -49.28306], [-25.50494, -49.28269], [-25.50426, -49.28221], [-25.50113, -49.27967], [-25.49868, -49.27768], [-25.49851, -49.27753], [-25.49807, -49.27703], [-25.49667, -49.27591], [-25.4957, -49.27513], [-25.49305, -49.27303], [-25.48709, -49.26823], [-25.48671, -49.26789], [-25.48631, -49.26741], [-25.48584, -49.26703], [-25.48589, -49.26687], [-25.48591, -49.26662], [-25.4859, -49.26639], [-25.4856, -49.26559], [-25.48537, -49.26502], [-25.48474, -49.26531], [-25.4845, -49.26542], [-25.48437, -49.26569], [-25.48439, -49.26628], [-25.48435, -49.26655], [-25.4843, -49.26666], [-25.48549, -49.26761], [-25.48604, -49.26805], [-25.48617, -49.26822], [-25.48767, -49.26943], [-25.48837, -49.26998]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_c6d69bc698f7672a1aee10567160d44d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_26d6a688c3ab3eca3a64e8c43dc963a0 = $(<div id="html_26d6a688c3ab3eca3a64e8c43dc963a0" style="width: 100.0%; height: 100.0%;"><b>Rodovia BR-116 (trecho urbano de Curitiba)</b><br>Modo: Carro<br>Distância: 59.8 km<br>Duração (sem trânsito): 55 mins<br>Duração (com trânsito): 56 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_c6d69bc698f7672a1aee10567160d44d.setContent(html_26d6a688c3ab3eca3a64e8c43dc963a0);
+            
+        
+
+        poly_line_7812ee07605c30ee6371360a850c668f.bindPopup(popup_c6d69bc698f7672a1aee10567160d44d)
+        ;
+
+        
+    
+    
+            poly_line_7812ee07605c30ee6371360a850c668f.bindTooltip(
+                <div>
+                     Rodovia BR-116 (trecho urbano de Curitiba) - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_20bceaee091a49a833c4f8b8a17edd10 = L.polyline(
+                [[-25.87655, -49.48937], [-25.87599, -49.48868], [-25.87562, -49.4877], [-25.87555, -49.48719], [-25.87549, -49.48666], [-25.87543, -49.48589], [-25.87557, -49.48586], [-25.87543, -49.48589], [-25.87537, -49.48549], [-25.87522, -49.48399], [-25.87505, -49.48263], [-25.87409, -49.47891], [-25.87387, -49.47787], [-25.87386, -49.47733], [-25.87415, -49.47587], [-25.87525, -49.4712], [-25.87539, -49.47042], [-25.87542, -49.46963], [-25.87526, -49.46841], [-25.87491, -49.4675], [-25.87407, -49.4659], [-25.8725, -49.46284], [-25.86876, -49.45549], [-25.86673, -49.45196], [-25.86617, -49.45078], [-25.86542, -49.44699], [-25.86514, -49.44542], [-25.86517, -49.44399], [-25.86575, -49.44007], [-25.8661, -49.43766], [-25.86633, -49.43615], [-25.86635, -49.43519], [-25.86601, -49.43412], [-25.86546, -49.43314], [-25.86472, -49.43195], [-25.86435, -49.43115], [-25.86428, -49.4308], [-25.86421, -49.43011], [-25.86424, -49.42962], [-25.86458, -49.42609], [-25.86481, -49.42379], [-25.86507, -49.42365], [-25.86505, -49.42347], [-25.86499, -49.42316], [-25.86497, -49.423], [-25.86494, -49.42284], [-25.86485, -49.4226], [-25.86474, -49.42167], [-25.86452, -49.41976], [-25.86442, -49.41856], [-25.86457, -49.41753], [-25.86473, -49.41699], [-25.86509, -49.41624], [-25.86574, -49.41501], [-25.86612, -49.41421], [-25.86624, -49.4135], [-25.86622, -49.41283], [-25.86598, -49.41193], [-25.86537, -49.411], [-25.8635, -49.4086], [-25.86224, -49.40694], [-25.86193, -49.40642], [-25.86168, -49.40562], [-25.86161, -49.40497], [-25.86198, -49.4031], [-25.86264, -49.40064], [-25.86286, -49.39981], [-25.86299, -49.39934], [-25.86307, -49.3992], [-25.86317, -49.39912], [-25.8632, -49.39884], [-25.86319, -49.39875], [-25.86325, -49.39832], [-25.86387, -49.39585], [-25.86492, -49.38908], [-25.86524, -49.38664], [-25.86514, -49.3843], [-25.86544, -49.38307], [-25.86602, -49.38168], [-25.86724, -49.37882], [-25.86778, -49.37736], [-25.86793, -49.37673], [-25.86798, -49.37558], [-25.86776, -49.37343], [-25.86775, -49.37231], [-25.8678, -49.37199], [-25.86812, -49.37115], [-25.86893, -49.36968], [-25.86914, -49.36868], [-25.86921, -49.36766], [-25.8691, -49.36685], [-25.869, -49.36657], [-25.86913, -49.36648], [-25.86899, -49.36615], [-25.86871, -49.36559], [-25.86863, -49.36526], [-25.86772, -49.36447], [-25.86745, -49.36445], [-25.86692, -49.36415], [-25.86495, -49.36319], [-25.86269, -49.36209], [-25.86077, -49.36113], [-25.85617, -49.35879], [-25.85552, -49.35851], [-25.8546, -49.35825], [-25.85319, -49.35795], [-25.85161, -49.35757], [-25.85081, -49.357], [-25.84826, -49.3541], [-25.84322, -49.34831], [-25.84228, -49.34721], [-25.84091, -49.34567], [-25.83792, -49.34223], [-25.83329, -49.33691], [-25.83276, -49.33638], [-25.8322, -49.33602], [-25.83184, -49.33588], [-25.83116, -49.33577], [-25.82977, -49.33593], [-25.82781, -49.3362], [-25.82702, -49.3362], [-25.82582, -49.336], [-25.82449, -49.3357], [-25.82381, -49.33555], [-25.82235, -49.33521], [-25.82163, -49.33496], [-25.81942, -49.33348], [-25.81795, -49.33251], [-25.81422, -49.32992], [-25.81149, -49.32746], [-25.81092, -49.32698], [-25.81027, -49.32663], [-25.8094, -49.32638], [-25.80912, -49.32636], [-25.80825, -49.32645], [-25.80394, -49.32822], [-25.80083, -49.32952], [-25.80028, -49.32962], [-25.79975, -49.32961], [-25.79812, -49.32923], [-25.7928, -49.32798], [-25.78943, -49.32718], [-25.78644, -49.3264], [-25.78541, -49.32611], [-25.78371, -49.32572], [-25.77961, -49.32481], [-25.77838, -49.32448], [-25.77762, -49.32419], [-25.77694, -49.32404], [-25.77681, -49.32408], [-25.77678, -49.32426], [-25.77686, -49.32436], [-25.77695, -49.32438], [-25.77712, -49.32457], [-25.77738, -49.3247], [-25.77732, -49.32545], [-25.77716, -49.32539], [-25.77732, -49.32461], [-25.77744, -49.32449], [-25.77756, -49.32452], [-25.77764, -49.32451], [-25.77773, -49.32441], [-25.77778, -49.32425], [-25.77762, -49.32419], [-25.77729, -49.3241], [-25.77701, -49.32404], [-25.77689, -49.32404], [-25.77658, -49.324], [-25.7741, -49.32345], [-25.7717, -49.32286], [-25.76676, -49.32167], [-25.76127, -49.32039], [-25.75763, -49.31952], [-25.75696, -49.3193], [-25.75526, -49.31848], [-25.75295, -49.31739], [-25.75215, -49.31723], [-25.74859, -49.31725], [-25.73979, -49.31745], [-25.73128, -49.31764], [-25.72827, -49.3177], [-25.72606, -49.31784], [-25.7238, -49.31792], [-25.72189, -49.31795], [-25.71907, -49.31807], [-25.71726, -49.31807], [-25.71655, -49.31811], [-25.71461, -49.31805], [-25.71347, -49.31814], [-25.71317, -49.31822], [-25.71252, -49.31861], [-25.71091, -49.31992], [-25.71013, -49.32028], [-25.70905, -49.32059], [-25.70761, -49.32058], [-25.70491, -49.32003], [-25.69619, -49.31823], [-25.69063, -49.31707], [-25.68825, -49.31662], [-25.68616, -49.31644], [-25.67806, -49.31583], [-25.67513, -49.31559], [-25.67223, -49.31518], [-25.66826, -49.31457], [-25.66671, -49.31438], [-25.6658, -49.31419], [-25.66252, -49.31337], [-25.66142, -49.31309], [-25.66088, -49.31295], [-25.6608, -49.31273], [-25.66063, -49.31251], [-25.66019, -49.3124], [-25.65863, -49.312], [-25.65807, -49.312], [-25.65782, -49.31195], [-25.65679, -49.31183], [-25.65582, -49.31181], [-25.65317, -49.31195], [-25.65281, -49.31192], [-25.65267, -49.31172], [-25.65265, -49.3116], [-25.65256, -49.31148], [-25.65242, -49.31146], [-25.65229, -49.31157], [-25.65215, -49.31174], [-25.65186, -49.31198], [-25.65108, -49.31207], [-25.65013, -49.31214], [-25.64799, -49.31222], [-25.64608, -49.31237], [-25.64518, -49.31238], [-25.64486, -49.31225], [-25.64467, -49.31208], [-25.64452, -49.31203], [-25.6444, -49.31215], [-25.6444, -49.31224], [-25.64411, -49.31242], [-25.64356, -49.31253], [-25.64038, -49.31267], [-25.6342, -49.31303], [-25.63147, -49.31323], [-25.62935, -49.31376], [-25.62705, -49.31445], [-25.62669, -49.31466], [-25.62339, -49.31558], [-25.61861, -49.31686], [-25.61434, -49.31803], [-25.61137, -49.31884], [-25.6097, -49.31919], [-25.60841, -49.3191], [-25.60549, -49.31846], [-25.60169, -49.31758], [-25.59563, -49.31632], [-25.58404, -49.31377], [-25.57258, -49.31127], [-25.57056, -49.31073], [-25.56797, -49.3099], [-25.56693, -49.30958], [-25.56561, -49.30914], [-25.56454, -49.30876], [-25.56344, -49.30857], [-25.56118, -49.30788], [-25.55999, -49.3073], [-25.55899, -49.30674], [-25.55838, -49.3064], [-25.55608, -49.30581], [-25.55205, -49.30485], [-25.54799, -49.3039], [-25.5464, -49.30362], [-25.54604, -49.3036], [-25.54044, -49.30229], [-25.53516, -49.30104], [-25.53395, -49.30065], [-25.53303, -49.3003], [-25.5307, -49.29946], [-25.53058, -49.29934], [-25.52992, -49.29896], [-25.52797, -49.29821], [-25.52568, -49.2968], [-25.52328, -49.29531], [-25.52132, -49.29412], [-25.52104, -49.29391], [-25.52148, -49.29261], [-25.52167, -49.29204], [-25.52195, -49.29218], [-25.52258, -49.29256], [-25.52307, -49.29286], [-25.52381, -49.29335], [-25.52296, -49.29446], [-25.52246, -49.29494], [-25.52221, -49.29515], [-25.52187, -49.29533], [-25.52135, -49.29521], [-25.51856, -49.29429], [-25.51726, -49.29403], [-25.5156, -49.29377], [-25.51502, -49.29389], [-25.51425, -49.29417], [-25.51378, -49.29428], [-25.51174, -49.29432], [-25.51177, -49.29575], [-25.51186, -49.29586], [-25.51197, -49.29583], [-25.51294, -49.29576], [-25.5135, -49.29574], [-25.51361, -49.29555], [-25.51361, -49.29524], [-25.51368, -49.29524], [-25.51367, -49.29483], [-25.51367, -49.29459], [-25.51374, -49.29447], [-25.5139, -49.29442], [-25.51388, -49.29427], [-25.51261, -49.29433], [-25.51174, -49.29432], [-25.51175, -49.29449], [-25.51175, -49.29468], [-25.5119, -49.29468], [-25.5121, -49.29467], [-25.51176, -49.29468], [-25.51174, -49.29404], [-25.51152, -49.29302], [-25.5114, -49.2925], [-25.51145, -49.29211], [-25.51246, -49.29004], [-25.51269, -49.28914], [-25.51094, -49.28776], [-25.50674, -49.28435], [-25.50113, -49.27981], [-25.49753, -49.27696], [-25.4971, -49.27656], [-25.49711, -49.2765], [-25.49706, -49.27635], [-25.49627, -49.27571], [-25.49615, -49.27569], [-25.49604, -49.27576], [-25.4958, -49.27557], [-25.49421, -49.27413], [-25.49062, -49.27119], [-25.48693, -49.26822], [-25.48553, -49.26719], [-25.48517, -49.26689], [-25.48523, -49.26681], [-25.48535, -49.26663], [-25.48584, -49.26703], [-25.48577, -49.26716], [-25.48568, -49.2673], [-25.48549, -49.26761], [-25.48574, -49.26783], [-25.48613, -49.26819], [-25.48745, -49.26925], [-25.48837, -49.26998]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_d405f5089e9752c989dfe52028ad6e7f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_00f80c047deb68e51f7192e778f2acae = $(<div id="html_00f80c047deb68e51f7192e778f2acae" style="width: 100.0%; height: 100.0%;"><b>Rodovia BR-116 (trecho urbano de Curitiba)</b><br>Modo: Ônibus<br>Distância: 62.4 km<br>Duração (sem trânsito): 3 hours 21 mins<br>(Somente ônibus)</div>)[0];
+                popup_d405f5089e9752c989dfe52028ad6e7f.setContent(html_00f80c047deb68e51f7192e778f2acae);
+            
+        
+
+        poly_line_20bceaee091a49a833c4f8b8a17edd10.bindPopup(popup_d405f5089e9752c989dfe52028ad6e7f)
+        ;
+
+        
+    
+    
+            poly_line_20bceaee091a49a833c4f8b8a17edd10.bindTooltip(
+                <div>
+                     Rodovia BR-116 (trecho urbano de Curitiba) - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0467600ab47c338e64d08d3a2bafa802 = L.polyline(
+                [[-25.42428, -49.27945], [-25.42365, -49.28012], [-25.42347, -49.28036], [-25.42332, -49.2806], [-25.42318, -49.28092], [-25.42303, -49.28136], [-25.42292, -49.28171], [-25.42289, -49.2818], [-25.42281, -49.28207], [-25.42277, -49.28234], [-25.42274, -49.28252], [-25.42271, -49.28274], [-25.4226, -49.28329], [-25.42201, -49.28633], [-25.42199, -49.28649], [-25.42204, -49.28682], [-25.42268, -49.29017], [-25.42269, -49.29039], [-25.42267, -49.29057], [-25.4226, -49.29086], [-25.42248, -49.29124], [-25.42224, -49.29157], [-25.42204, -49.29179], [-25.42191, -49.29189], [-25.42035, -49.29263], [-25.42007, -49.29275], [-25.41817, -49.29364], [-25.41799, -49.29375], [-25.41744, -49.29423], [-25.41681, -49.29469], [-25.41629, -49.29509], [-25.41617, -49.29527], [-25.41611, -49.29546], [-25.41589, -49.29646], [-25.41572, -49.29727], [-25.41551, -49.2982], [-25.41545, -49.29848], [-25.41541, -49.29879], [-25.41541, -49.2991], [-25.41547, -49.29996], [-25.41551, -49.30056], [-25.41549, -49.30098], [-25.41544, -49.30127], [-25.41528, -49.30178], [-25.41487, -49.30317], [-25.41461, -49.30416], [-25.41434, -49.30502], [-25.41429, -49.30521], [-25.41429, -49.3054], [-25.41434, -49.30556], [-25.41453, -49.30601], [-25.41467, -49.30633], [-25.41472, -49.30653], [-25.41473, -49.30676], [-25.41457, -49.30769], [-25.41437, -49.30876], [-25.41416, -49.3098], [-25.41394, -49.31083], [-25.41376, -49.31175], [-25.41335, -49.31373]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_874690068b240e9fecba84132fe89cd1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9df41269853ccda5395c3f8e5db7fbb2 = $(<div id="html_9df41269853ccda5395c3f8e5db7fbb2" style="width: 100.0%; height: 100.0%;"><b>Avenida Manoel Ribas</b><br>Modo: Carro<br>Distância: 4.0 km<br>Duração (sem trânsito): 8 mins<br>Duração (com trânsito): 9 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_874690068b240e9fecba84132fe89cd1.setContent(html_9df41269853ccda5395c3f8e5db7fbb2);
+            
+        
+
+        poly_line_0467600ab47c338e64d08d3a2bafa802.bindPopup(popup_874690068b240e9fecba84132fe89cd1)
+        ;
+
+        
+    
+    
+            poly_line_0467600ab47c338e64d08d3a2bafa802.bindTooltip(
+                <div>
+                     Avenida Manoel Ribas - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d730cfdfc07695510d08b01229ee9f88 = L.polyline(
+                [[-25.42428, -49.27945], [-25.42365, -49.28012], [-25.42347, -49.28036], [-25.42332, -49.2806], [-25.42327, -49.28072], [-25.4232, -49.28068], [-25.42327, -49.28071], [-25.42322, -49.28082], [-25.42316, -49.28098], [-25.42298, -49.28151], [-25.4229, -49.28176], [-25.42281, -49.28207], [-25.42276, -49.28239], [-25.42269, -49.28282], [-25.42229, -49.28486], [-25.42201, -49.28633], [-25.42199, -49.28649], [-25.42204, -49.28682], [-25.42265, -49.28998], [-25.42269, -49.29039], [-25.42267, -49.29057], [-25.4226, -49.29086], [-25.42248, -49.29124], [-25.42224, -49.29157], [-25.42204, -49.29179], [-25.42191, -49.29189], [-25.42104, -49.2923], [-25.41927, -49.29313], [-25.41817, -49.29364], [-25.41799, -49.29375], [-25.41744, -49.29423], [-25.41688, -49.29464], [-25.41646, -49.29495], [-25.41629, -49.29509], [-25.41622, -49.29518], [-25.41614, -49.29536], [-25.4159, -49.29643], [-25.41576, -49.29709], [-25.41553, -49.29811], [-25.41541, -49.29872], [-25.41541, -49.29907], [-25.41544, -49.29948], [-25.41551, -49.30048], [-25.41551, -49.30084], [-25.41544, -49.30127], [-25.4151, -49.30236], [-25.41461, -49.30416], [-25.41432, -49.30507], [-25.41428, -49.30533], [-25.41436, -49.30564], [-25.41462, -49.30621], [-25.41472, -49.30653], [-25.41473, -49.30676], [-25.41467, -49.3071], [-25.41446, -49.30831], [-25.41437, -49.30876], [-25.41416, -49.3098], [-25.41394, -49.31083], [-25.4135, -49.313], [-25.41346, -49.3132], [-25.41342, -49.31319], [-25.41346, -49.3132], [-25.41346, -49.31322], [-25.41335, -49.31373]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_301350693f5e51f9d0708faa4af0b980 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d7b60a1799a14041df041ec7c14baa54 = $(<div id="html_d7b60a1799a14041df041ec7c14baa54" style="width: 100.0%; height: 100.0%;"><b>Avenida Manoel Ribas</b><br>Modo: Ônibus<br>Distância: 4.0 km<br>Duração (sem trânsito): 19 mins<br>(Somente ônibus)</div>)[0];
+                popup_301350693f5e51f9d0708faa4af0b980.setContent(html_d7b60a1799a14041df041ec7c14baa54);
+            
+        
+
+        poly_line_d730cfdfc07695510d08b01229ee9f88.bindPopup(popup_301350693f5e51f9d0708faa4af0b980)
+        ;
+
+        
+    
+    
+            poly_line_d730cfdfc07695510d08b01229ee9f88.bindTooltip(
+                <div>
+                     Avenida Manoel Ribas - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_068a3bd7c3fd2e452be2704beb106648 = L.polyline(
+                [[-25.41157, -49.25739], [-25.41178, -49.25761], [-25.41135, -49.25823], [-25.4107, -49.25912], [-25.4105, -49.25942], [-25.41039, -49.25969], [-25.40977, -49.25986], [-25.40951, -49.25989], [-25.40917, -49.25991], [-25.4088, -49.2599], [-25.40826, -49.25981], [-25.40791, -49.25973], [-25.40743, -49.25954], [-25.40686, -49.25915], [-25.40571, -49.25886], [-25.4043, -49.25852], [-25.40437, -49.25816], [-25.40431, -49.25805], [-25.40427, -49.258], [-25.40385, -49.25823], [-25.40364, -49.25836], [-25.40337, -49.25851], [-25.40317, -49.25859], [-25.40299, -49.25863], [-25.40248, -49.25869], [-25.4021, -49.25871], [-25.4018, -49.25871], [-25.40149, -49.25867], [-25.40133, -49.25863], [-25.4011, -49.25854], [-25.4004, -49.25822], [-25.40019, -49.25811], [-25.40004, -49.25801], [-25.39959, -49.25765], [-25.39926, -49.25738], [-25.39911, -49.25725], [-25.39897, -49.25717], [-25.39879, -49.25709], [-25.3982, -49.25694], [-25.39739, -49.25676], [-25.39702, -49.25671], [-25.39665, -49.25675], [-25.39631, -49.25678], [-25.39602, -49.25684], [-25.39585, -49.25691], [-25.39572, -49.257], [-25.39548, -49.25722], [-25.39496, -49.25771], [-25.39492, -49.25772], [-25.39487, -49.25775], [-25.39423, -49.25836], [-25.39414, -49.25845], [-25.39412, -49.25851], [-25.39411, -49.25856], [-25.39408, -49.2586], [-25.39391, -49.25849], [-25.39369, -49.25833], [-25.39358, -49.25826], [-25.39349, -49.25823], [-25.3933, -49.25823], [-25.39271, -49.25822], [-25.39166, -49.25817], [-25.39149, -49.25811], [-25.3913, -49.25809], [-25.39105, -49.25808], [-25.39092, -49.25809], [-25.39069, -49.25817], [-25.39054, -49.25827], [-25.39031, -49.25845], [-25.39012, -49.25867], [-25.39002, -49.25884], [-25.38994, -49.25939], [-25.38988, -49.25973], [-25.38983, -49.25984], [-25.38974, -49.25997], [-25.38961, -49.26012], [-25.38947, -49.26022], [-25.38932, -49.26029], [-25.3892, -49.26034], [-25.38912, -49.26034], [-25.3889, -49.26032], [-25.38872, -49.26026], [-25.38824, -49.26001], [-25.38801, -49.25995], [-25.38758, -49.25988], [-25.38733, -49.25985], [-25.38712, -49.25986], [-25.38668, -49.2599], [-25.38649, -49.25995], [-25.3863, -49.26005], [-25.3854, -49.26091], [-25.38504, -49.26118], [-25.38482, -49.26131], [-25.38449, -49.26146], [-25.38437, -49.26156], [-25.38427, -49.26168], [-25.38343, -49.26173], [-25.38303, -49.26176], [-25.38281, -49.26178], [-25.38258, -49.26174], [-25.38234, -49.26168], [-25.38211, -49.26159], [-25.38183, -49.26147], [-25.38165, -49.2614], [-25.38131, -49.26133], [-25.38096, -49.26132], [-25.38061, -49.26138], [-25.3804, -49.26145], [-25.38016, -49.2616], [-25.37944, -49.26226], [-25.37922, -49.26243], [-25.37904, -49.2625], [-25.37862, -49.26255], [-25.37829, -49.26258]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_bc46a168887dc1a978c7db4c5d27fae4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f1a8a08264cbe2a1f30bc613e2160836 = $(<div id="html_f1a8a08264cbe2a1f30bc613e2160836" style="width: 100.0%; height: 100.0%;"><b>Avenida Anita Garibaldi</b><br>Modo: Carro<br>Distância: 4.3 km<br>Duração (sem trânsito): 10 mins<br>Duração (com trânsito): 11 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_bc46a168887dc1a978c7db4c5d27fae4.setContent(html_f1a8a08264cbe2a1f30bc613e2160836);
+            
+        
+
+        poly_line_068a3bd7c3fd2e452be2704beb106648.bindPopup(popup_bc46a168887dc1a978c7db4c5d27fae4)
+        ;
+
+        
+    
+    
+            poly_line_068a3bd7c3fd2e452be2704beb106648.bindTooltip(
+                <div>
+                     Avenida Anita Garibaldi - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_877a13ba635320c8e626173eb5a5d935 = L.polyline(
+                [[-25.41157, -49.25739], [-25.41178, -49.25761], [-25.41185, -49.25752], [-25.41202, -49.25728], [-25.41236, -49.25681], [-25.41244, -49.25669], [-25.41257, -49.25675], [-25.41298, -49.25692], [-25.41364, -49.25721], [-25.4136, -49.25688], [-25.41359, -49.2568], [-25.41363, -49.2568], [-25.41359, -49.2568], [-25.41355, -49.25651], [-25.41354, -49.25642], [-25.41347, -49.25592], [-25.41341, -49.25559], [-25.41334, -49.25544], [-25.41322, -49.25528], [-25.41305, -49.25516], [-25.41257, -49.25496], [-25.41207, -49.2547], [-25.41198, -49.25466], [-25.41186, -49.2546], [-25.41173, -49.2546], [-25.4114, -49.25468], [-25.41132, -49.25468], [-25.41126, -49.25468], [-25.41112, -49.25461], [-25.41088, -49.25446], [-25.41075, -49.25441], [-25.41017, -49.2543], [-25.40986, -49.2542], [-25.40966, -49.25408], [-25.40926, -49.25371], [-25.40877, -49.25325], [-25.40816, -49.254], [-25.40777, -49.25453], [-25.40747, -49.25492], [-25.40687, -49.25574], [-25.4062, -49.25662], [-25.40577, -49.25714], [-25.40427, -49.258], [-25.40345, -49.25847], [-25.40329, -49.25854], [-25.40308, -49.25861], [-25.40239, -49.25869], [-25.40187, -49.25871], [-25.40162, -49.25869], [-25.40133, -49.25863], [-25.4011, -49.25854], [-25.4006, -49.25831], [-25.40019, -49.25811], [-25.40004, -49.25801], [-25.39959, -49.25765], [-25.3992, -49.25732], [-25.39904, -49.2572], [-25.39886, -49.25712], [-25.39781, -49.25684], [-25.39739, -49.25676], [-25.39702, -49.25671], [-25.39665, -49.25675], [-25.39631, -49.25678], [-25.39602, -49.25684], [-25.39585, -49.25691], [-25.39572, -49.257], [-25.39496, -49.25771], [-25.3949, -49.25773], [-25.39441, -49.25819], [-25.39412, -49.25848], [-25.39408, -49.2586], [-25.39338, -49.25978], [-25.39325, -49.26002], [-25.39302, -49.26036], [-25.39279, -49.26071], [-25.39267, -49.2608], [-25.3925, -49.26088], [-25.39197, -49.2609], [-25.39158, -49.26086], [-25.39094, -49.26063], [-25.39068, -49.26056], [-25.39056, -49.26054], [-25.3897, -49.26062], [-25.38869, -49.26073], [-25.38826, -49.26079], [-25.38761, -49.26088], [-25.38741, -49.26094], [-25.38725, -49.261], [-25.3871, -49.26105], [-25.38692, -49.2612], [-25.38682, -49.26125], [-25.38658, -49.26136], [-25.38606, -49.26156], [-25.38579, -49.26162], [-25.38538, -49.26164], [-25.38473, -49.26166], [-25.38376, -49.26171], [-25.38318, -49.26176], [-25.38281, -49.26178], [-25.38243, -49.26171], [-25.38233, -49.26168], [-25.38186, -49.26148], [-25.38165, -49.2614], [-25.38115, -49.26131], [-25.38073, -49.26135], [-25.3804, -49.26145], [-25.38016, -49.2616], [-25.37963, -49.2621], [-25.37922, -49.26243], [-25.37904, -49.2625], [-25.37887, -49.26252], [-25.37862, -49.26255], [-25.37797, -49.26261], [-25.37702, -49.26269], [-25.377, -49.26241], [-25.37756, -49.26236], [-25.37764, -49.26234], [-25.37766, -49.2624], [-25.3778, -49.26242], [-25.37777, -49.2623], [-25.37794, -49.26224], [-25.37797, -49.26261], [-25.37829, -49.26258]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_e35b77fd3757464dc8468b488001e424 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_182731699df8c07ac26eda159e1025a1 = $(<div id="html_182731699df8c07ac26eda159e1025a1" style="width: 100.0%; height: 100.0%;"><b>Avenida Anita Garibaldi</b><br>Modo: Ônibus<br>Distância: 5.3 km<br>Duração (sem trânsito): 24 mins<br>(Somente ônibus)</div>)[0];
+                popup_e35b77fd3757464dc8468b488001e424.setContent(html_182731699df8c07ac26eda159e1025a1);
+            
+        
+
+        poly_line_877a13ba635320c8e626173eb5a5d935.bindPopup(popup_e35b77fd3757464dc8468b488001e424)
+        ;
+
+        
+    
+    
+            poly_line_877a13ba635320c8e626173eb5a5d935.bindTooltip(
+                <div>
+                     Avenida Anita Garibaldi - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4c81a4a9ebdcea26bcd06630a47ccc97 = L.polyline(
+                [[-25.38301, -49.28777], [-25.38301, -49.28796], [-25.38304, -49.28804], [-25.3831, -49.28813], [-25.38337, -49.28841], [-25.38374, -49.28882], [-25.38393, -49.28909], [-25.38401, -49.28928], [-25.38405, -49.28944], [-25.38405, -49.28968], [-25.38399, -49.28986], [-25.38374, -49.29037], [-25.38355, -49.29099], [-25.38346, -49.29147], [-25.38322, -49.29298], [-25.38314, -49.29344], [-25.38316, -49.29359], [-25.38322, -49.29374], [-25.38333, -49.29396], [-25.38354, -49.29423], [-25.38416, -49.29492], [-25.38428, -49.29508], [-25.38439, -49.29534], [-25.38441, -49.29553], [-25.38437, -49.29643], [-25.38442, -49.29669], [-25.38483, -49.2979], [-25.38502, -49.29865], [-25.38511, -49.29894], [-25.38515, -49.29904], [-25.38525, -49.2992], [-25.38544, -49.29941], [-25.38589, -49.29975], [-25.38639, -49.30017], [-25.3866, -49.30039], [-25.38686, -49.3007], [-25.38695, -49.30083], [-25.38702, -49.301], [-25.3871, -49.30127], [-25.38715, -49.30159], [-25.38717, -49.30207], [-25.38721, -49.3029], [-25.38723, -49.30348], [-25.38721, -49.30368], [-25.3872, -49.30401], [-25.3872, -49.30446], [-25.38718, -49.30506], [-25.38713, -49.30536], [-25.38706, -49.30567], [-25.38698, -49.30584], [-25.38683, -49.30609], [-25.38561, -49.30789], [-25.38473, -49.30914]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_26fc2c9cc3dd98d1ee350da923282451 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1093f313dcb90f89f3ce3d21d1217fbf = $(<div id="html_1093f313dcb90f89f3ce3d21d1217fbf" style="width: 100.0%; height: 100.0%;"><b>Avenida Fredolin Wolf</b><br>Modo: Carro<br>Distância: 2.5 km<br>Duração (sem trânsito): 4 mins<br>Duração (com trânsito): 4 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_26fc2c9cc3dd98d1ee350da923282451.setContent(html_1093f313dcb90f89f3ce3d21d1217fbf);
+            
+        
+
+        poly_line_4c81a4a9ebdcea26bcd06630a47ccc97.bindPopup(popup_26fc2c9cc3dd98d1ee350da923282451)
+        ;
+
+        
+    
+    
+            poly_line_4c81a4a9ebdcea26bcd06630a47ccc97.bindTooltip(
+                <div>
+                     Avenida Fredolin Wolf - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_607d8a42df30db3bb861c9350eb75342 = L.polyline(
+                [[-25.38301, -49.28777], [-25.38301, -49.28796], [-25.38304, -49.28804], [-25.3831, -49.28813], [-25.38324, -49.28828], [-25.3832, -49.28833], [-25.38324, -49.28828], [-25.38341, -49.28845], [-25.3838, -49.28891], [-25.38388, -49.28901], [-25.38398, -49.28918], [-25.38404, -49.28937], [-25.38405, -49.28952], [-25.38404, -49.28972], [-25.38394, -49.28996], [-25.3838, -49.29023], [-25.38368, -49.29053], [-25.3836, -49.29079], [-25.38352, -49.29116], [-25.38344, -49.29159], [-25.38322, -49.29298], [-25.38314, -49.29344], [-25.38301, -49.29353], [-25.38275, -49.29369], [-25.38272, -49.29363], [-25.38765, -49.3011], [-25.38763, -49.30109], [-25.3877, -49.30115], [-25.38753, -49.30136], [-25.38742, -49.30147], [-25.38733, -49.30153], [-25.38723, -49.30157], [-25.38715, -49.30159], [-25.38717, -49.30194], [-25.38717, -49.30225], [-25.38706, -49.30246], [-25.38696, -49.30275], [-25.38671, -49.3034], [-25.38662, -49.30358], [-25.38649, -49.30371], [-25.38634, -49.30379], [-25.38611, -49.30382], [-25.38567, -49.30378], [-25.38551, -49.3038], [-25.38542, -49.30383], [-25.38507, -49.30404], [-25.38493, -49.30404], [-25.38478, -49.30397], [-25.38469, -49.30389], [-25.38455, -49.30374], [-25.3844, -49.30357], [-25.38432, -49.30351], [-25.3842, -49.30346], [-25.38419, -49.3037], [-25.38422, -49.30393], [-25.38432, -49.30494], [-25.3843, -49.30535], [-25.38406, -49.30664], [-25.38396, -49.3074], [-25.38392, -49.30816], [-25.38387, -49.30864], [-25.38373, -49.30912], [-25.38366, -49.30932], [-25.38362, -49.30956], [-25.38359, -49.31], [-25.38362, -49.31015], [-25.38371, -49.31033], [-25.3832, -49.311], [-25.3831, -49.31091], [-25.3832, -49.311], [-25.38371, -49.31033], [-25.38457, -49.30934], [-25.38473, -49.30914]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_819eb0c914889e821ec04a58061c3ca8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_83740f6f4d982aff26a175920b8c14e3 = $(<div id="html_83740f6f4d982aff26a175920b8c14e3" style="width: 100.0%; height: 100.0%;"><b>Avenida Fredolin Wolf</b><br>Modo: Ônibus<br>Distância: 3.3 km<br>Duração (sem trânsito): 37 mins<br>(Somente ônibus)</div>)[0];
+                popup_819eb0c914889e821ec04a58061c3ca8.setContent(html_83740f6f4d982aff26a175920b8c14e3);
+            
+        
+
+        poly_line_607d8a42df30db3bb861c9350eb75342.bindPopup(popup_819eb0c914889e821ec04a58061c3ca8)
+        ;
+
+        
+    
+    
+            poly_line_607d8a42df30db3bb861c9350eb75342.bindTooltip(
+                <div>
+                     Avenida Fredolin Wolf - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_ef46b7ab101b5c8d80bf0ff5c26b9006 = L.polyline(
+                [[-25.4085, -49.28289], [-25.40952, -49.28217]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_e35c5ec0295c787f37c1f26f2403a142 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5e01b2666671563e08b46b04a0c883f8 = $(<div id="html_5e01b2666671563e08b46b04a0c883f8" style="width: 100.0%; height: 100.0%;"><b>Avenida Hugo Simas</b><br>Modo: Carro<br>Distância: 0.1 km<br>Duração (sem trânsito): 1 min<br>Duração (com trânsito): 1 min<br>Condição: Trânsito livre</div>)[0];
+                popup_e35c5ec0295c787f37c1f26f2403a142.setContent(html_5e01b2666671563e08b46b04a0c883f8);
+            
+        
+
+        poly_line_ef46b7ab101b5c8d80bf0ff5c26b9006.bindPopup(popup_e35c5ec0295c787f37c1f26f2403a142)
+        ;
+
+        
+    
+    
+            poly_line_ef46b7ab101b5c8d80bf0ff5c26b9006.bindTooltip(
+                <div>
+                     Avenida Hugo Simas - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5eb0608769c7c9e1efc46a2cc2ab3692 = L.polyline(
+                [[-25.4085, -49.28289], [-25.40952, -49.28217]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_db82c51a9eda8e5e19fc0217de6b366e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7e577e34010ab385c6ab449563003916 = $(<div id="html_7e577e34010ab385c6ab449563003916" style="width: 100.0%; height: 100.0%;"><b>Avenida Hugo Simas</b><br>Modo: Ônibus<br>Distância: 0.1 km<br>Duração (sem trânsito): 2 mins<br>(Somente ônibus)</div>)[0];
+                popup_db82c51a9eda8e5e19fc0217de6b366e.setContent(html_7e577e34010ab385c6ab449563003916);
+            
+        
+
+        poly_line_5eb0608769c7c9e1efc46a2cc2ab3692.bindPopup(popup_db82c51a9eda8e5e19fc0217de6b366e)
+        ;
+
+        
+    
+    
+            poly_line_5eb0608769c7c9e1efc46a2cc2ab3692.bindTooltip(
+                <div>
+                     Avenida Hugo Simas - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a4d9e9ddb31d83c1cbdb965f95f0198a = L.polyline(
+                [[-25.47055, -49.25548], [-25.47352, -49.25792], [-25.47414, -49.2584], [-25.47382, -49.25894], [-25.47351, -49.25946], [-25.47314, -49.26], [-25.47249, -49.26099], [-25.47203, -49.2617], [-25.47176, -49.26205], [-25.47174, -49.26206], [-25.47181, -49.26232], [-25.47188, -49.26259], [-25.47218, -49.2638], [-25.47252, -49.26512], [-25.47286, -49.26659], [-25.47334, -49.26849], [-25.47398, -49.27114], [-25.47405, -49.2714]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_82d078ee365569824889bea096e7264c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_27931147d8b5a8bf81a15484243bf8f5 = $(<div id="html_27931147d8b5a8bf81a15484243bf8f5" style="width: 100.0%; height: 100.0%;"><b>Avenida Presidente Wenceslau Brás</b><br>Modo: Carro<br>Distância: 1.9 km<br>Duração (sem trânsito): 4 mins<br>Duração (com trânsito): 4 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_82d078ee365569824889bea096e7264c.setContent(html_27931147d8b5a8bf81a15484243bf8f5);
+            
+        
+
+        poly_line_a4d9e9ddb31d83c1cbdb965f95f0198a.bindPopup(popup_82d078ee365569824889bea096e7264c)
+        ;
+
+        
+    
+    
+            poly_line_a4d9e9ddb31d83c1cbdb965f95f0198a.bindTooltip(
+                <div>
+                     Avenida Presidente Wenceslau Brás - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3344414de5583fef5f6e1a4076de0271 = L.polyline(
+                [[-25.47055, -49.25548], [-25.46993, -49.255], [-25.46897, -49.25421], [-25.46916, -49.25392], [-25.46976, -49.2544], [-25.47021, -49.25485], [-25.47037, -49.25501], [-25.4704, -49.25509], [-25.47041, -49.25517], [-25.47036, -49.25531], [-25.47027, -49.25549], [-25.47024, -49.25571], [-25.47025, -49.25591], [-25.47059, -49.25727], [-25.47093, -49.25875], [-25.4711, -49.25935], [-25.47131, -49.26017], [-25.47174, -49.26206], [-25.47225, -49.26406], [-25.47232, -49.26417], [-25.47241, -49.26436], [-25.47248, -49.26473], [-25.47251, -49.26507], [-25.47255, -49.26526], [-25.47296, -49.26702], [-25.47335, -49.26857], [-25.47353, -49.2693], [-25.47359, -49.26955], [-25.47366, -49.26965], [-25.47379, -49.26998], [-25.47381, -49.27005], [-25.47377, -49.27006], [-25.47381, -49.27005], [-25.47379, -49.26998], [-25.47366, -49.26965], [-25.47359, -49.26955], [-25.4737, -49.26999], [-25.4739, -49.27079], [-25.47405, -49.2714]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_7b01157b49bc56f3ef6c0486fada2593 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_475d3a00145f3a8463ccfb734fd0570f = $(<div id="html_475d3a00145f3a8463ccfb734fd0570f" style="width: 100.0%; height: 100.0%;"><b>Avenida Presidente Wenceslau Brás</b><br>Modo: Ônibus<br>Distância: 2.2 km<br>Duração (sem trânsito): 13 mins<br>(Somente ônibus)</div>)[0];
+                popup_7b01157b49bc56f3ef6c0486fada2593.setContent(html_475d3a00145f3a8463ccfb734fd0570f);
+            
+        
+
+        poly_line_3344414de5583fef5f6e1a4076de0271.bindPopup(popup_7b01157b49bc56f3ef6c0486fada2593)
+        ;
+
+        
+    
+    
+            poly_line_3344414de5583fef5f6e1a4076de0271.bindTooltip(
+                <div>
+                     Avenida Presidente Wenceslau Brás - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a9475974be63f1a01164347091cd8b88 = L.polyline(
+                [[-25.51129, -49.29588], [-25.51178, -49.29586], [-25.51186, -49.29586], [-25.51187, -49.29623], [-25.51191, -49.29734], [-25.51238, -49.29733], [-25.51399, -49.29729], [-25.51557, -49.29725], [-25.51876, -49.29716], [-25.51993, -49.29713], [-25.52035, -49.29711], [-25.52034, -49.29647], [-25.52032, -49.29562], [-25.52117, -49.29561], [-25.52208, -49.29558], [-25.52234, -49.29559], [-25.52259, -49.29564], [-25.52287, -49.29575], [-25.52306, -49.29585]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_f44e8f01832794e412a40a36da1772f1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_224a6e3c6563c89d1d1b2e0693c886a0 = $(<div id="html_224a6e3c6563c89d1d1b2e0693c886a0" style="width: 100.0%; height: 100.0%;"><b>Avenida Winston Churchill</b><br>Modo: Carro<br>Distância: 1.6 km<br>Duração (sem trânsito): 4 mins<br>Duração (com trânsito): 4 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_f44e8f01832794e412a40a36da1772f1.setContent(html_224a6e3c6563c89d1d1b2e0693c886a0);
+            
+        
+
+        poly_line_a9475974be63f1a01164347091cd8b88.bindPopup(popup_f44e8f01832794e412a40a36da1772f1)
+        ;
+
+        
+    
+    
+            poly_line_a9475974be63f1a01164347091cd8b88.bindTooltip(
+                <div>
+                     Avenida Winston Churchill - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1a43def47cb40dcb3041e172dfc1779a = L.polyline(
+                [[-25.51129, -49.29588], [-25.51178, -49.29586], [-25.51176, -49.29569], [-25.51176, -49.29557], [-25.51186, -49.29557], [-25.51255, -49.29513], [-25.51255, -49.29518], [-25.51175, -49.2952], [-25.51176, -49.29569], [-25.51178, -49.29586], [-25.51192, -49.29584], [-25.51268, -49.29577], [-25.51365, -49.29573], [-25.51513, -49.29569], [-25.51598, -49.29571], [-25.51641, -49.2957], [-25.51772, -49.29566], [-25.51944, -49.29561], [-25.52117, -49.29561], [-25.52146, -49.29562], [-25.52191, -49.29559], [-25.52222, -49.29559], [-25.52246, -49.29562], [-25.52272, -49.29569], [-25.52291, -49.29577], [-25.52306, -49.29585]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_2af8ad2ae759fadaf4511f793d985134 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_088cf933081bb541905171b837dbc323 = $(<div id="html_088cf933081bb541905171b837dbc323" style="width: 100.0%; height: 100.0%;"><b>Avenida Winston Churchill</b><br>Modo: Ônibus<br>Distância: 1.6 km<br>Duração (sem trânsito): 9 mins<br>(Somente ônibus)</div>)[0];
+                popup_2af8ad2ae759fadaf4511f793d985134.setContent(html_088cf933081bb541905171b837dbc323);
+            
+        
+
+        poly_line_1a43def47cb40dcb3041e172dfc1779a.bindPopup(popup_2af8ad2ae759fadaf4511f793d985134)
+        ;
+
+        
+    
+    
+            poly_line_1a43def47cb40dcb3041e172dfc1779a.bindTooltip(
+                <div>
+                     Avenida Winston Churchill - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_142301da753722153bc115822fbefa42 = L.polyline(
+                [[-25.45302, -49.27116], [-25.45298, -49.27118], [-25.45318, -49.27172], [-25.45336, -49.27218], [-25.45341, -49.27235], [-25.45342, -49.2725], [-25.4535, -49.2741], [-25.45354, -49.27505], [-25.45356, -49.27613], [-25.45353, -49.27654], [-25.45341, -49.27694], [-25.45327, -49.27732], [-25.45306, -49.27792], [-25.453, -49.27817], [-25.45296, -49.27859], [-25.45296, -49.2788], [-25.453, -49.27963], [-25.45302, -49.28014], [-25.45305, -49.28053], [-25.45323, -49.28165], [-25.45342, -49.28273], [-25.45356, -49.28375], [-25.4538, -49.28526], [-25.45385, -49.28592], [-25.45385, -49.28616]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_e781c7e9883a5cebafa40afe77385f2d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f4810c15b496a8902a48958c25a0a5bc = $(<div id="html_f4810c15b496a8902a48958c25a0a5bc" style="width: 100.0%; height: 100.0%;"><b>Avenida Água Verde</b><br>Modo: Carro<br>Distância: 1.5 km<br>Duração (sem trânsito): 3 mins<br>Duração (com trânsito): 5 mins<br>Condição: Trânsito pesado</div>)[0];
+                popup_e781c7e9883a5cebafa40afe77385f2d.setContent(html_f4810c15b496a8902a48958c25a0a5bc);
+            
+        
+
+        poly_line_142301da753722153bc115822fbefa42.bindPopup(popup_e781c7e9883a5cebafa40afe77385f2d)
+        ;
+
+        
+    
+    
+            poly_line_142301da753722153bc115822fbefa42.bindTooltip(
+                <div>
+                     Avenida Água Verde - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_750933ed6535743053ee5ab7219042d7 = L.polyline(
+                [[-25.45302, -49.27116], [-25.45117, -49.272], [-25.45001, -49.27251], [-25.44989, -49.27219], [-25.44985, -49.27221], [-25.44989, -49.27219], [-25.45046, -49.27366], [-25.45132, -49.2759], [-25.45175, -49.27701], [-25.45225, -49.27829], [-25.45306, -49.27792], [-25.453, -49.27817], [-25.45296, -49.27859], [-25.45296, -49.2788], [-25.453, -49.27963], [-25.453, -49.27985], [-25.45302, -49.28026], [-25.45305, -49.28052], [-25.45307, -49.28062], [-25.45351, -49.28082], [-25.45349, -49.28088], [-25.45351, -49.28082], [-25.45307, -49.28062], [-25.45323, -49.28165], [-25.45342, -49.28273], [-25.45356, -49.28375], [-25.4538, -49.28526], [-25.45385, -49.28592], [-25.45385, -49.28616]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_b3d828acdb365917ba171d04d63a8ae4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f2ea98f82edc1d2dc32d4b2e38238c7c = $(<div id="html_f2ea98f82edc1d2dc32d4b2e38238c7c" style="width: 100.0%; height: 100.0%;"><b>Avenida Água Verde</b><br>Modo: Ônibus<br>Distância: 2.1 km<br>Duração (sem trânsito): 18 mins<br>(Somente ônibus)</div>)[0];
+                popup_b3d828acdb365917ba171d04d63a8ae4.setContent(html_f2ea98f82edc1d2dc32d4b2e38238c7c);
+            
+        
+
+        poly_line_750933ed6535743053ee5ab7219042d7.bindPopup(popup_b3d828acdb365917ba171d04d63a8ae4)
+        ;
+
+        
+    
+    
+            poly_line_750933ed6535743053ee5ab7219042d7.bindTooltip(
+                <div>
+                     Avenida Água Verde - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3ff6b23c1094e03d930fbf0d0fe26d60 = L.polyline(
+                [[-25.42395, -49.27006], [-25.42428, -49.27013], [-25.42426, -49.2703], [-25.42411, -49.2712], [-25.42395, -49.27116], [-25.42342, -49.27103], [-25.42315, -49.27098], [-25.42235, -49.2708], [-25.42226, -49.2708], [-25.42131, -49.2709], [-25.41837, -49.27124], [-25.41812, -49.27127], [-25.41817, -49.27107], [-25.41829, -49.27082], [-25.41842, -49.27063], [-25.41861, -49.26976], [-25.41878, -49.26896], [-25.41883, -49.26885], [-25.41888, -49.26878], [-25.4182, -49.26861], [-25.41755, -49.26844]],
+                {"bubblingMouseEvents": true, "color": "yellow", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "yellow", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_99db55c4cf9408568998ff62ff2ad745 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ccf0bf0a95efdcdabddbe8507b703d8 = $(<div id="html_6ccf0bf0a95efdcdabddbe8507b703d8" style="width: 100.0%; height: 100.0%;"><b>Avenida Cândido de Abreu</b><br>Modo: Carro<br>Distância: 1.2 km<br>Duração (sem trânsito): 4 mins<br>Duração (com trânsito): 5 mins<br>Condição: Trânsito leve</div>)[0];
+                popup_99db55c4cf9408568998ff62ff2ad745.setContent(html_6ccf0bf0a95efdcdabddbe8507b703d8);
+            
+        
+
+        poly_line_3ff6b23c1094e03d930fbf0d0fe26d60.bindPopup(popup_99db55c4cf9408568998ff62ff2ad745)
+        ;
+
+        
+    
+    
+            poly_line_3ff6b23c1094e03d930fbf0d0fe26d60.bindTooltip(
+                <div>
+                     Avenida Cândido de Abreu - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5ef09b57faf52906056d3eb07fa2453a = L.polyline(
+                [[-25.42395, -49.27006], [-25.42428, -49.27013], [-25.42429, -49.27005], [-25.42431, -49.26996], [-25.42437, -49.26986], [-25.42443, -49.26943], [-25.42442, -49.2693], [-25.42434, -49.26907], [-25.42422, -49.26888], [-25.4242, -49.26887], [-25.4237, -49.26874], [-25.42352, -49.26872], [-25.4233, -49.26867], [-25.42332, -49.26857], [-25.4233, -49.26867], [-25.4232, -49.26864], [-25.42286, -49.26856], [-25.4219, -49.26833], [-25.42162, -49.2683], [-25.42131, -49.26829], [-25.42086, -49.26829], [-25.42075, -49.2683], [-25.42067, -49.26833], [-25.42058, -49.26841], [-25.42051, -49.2685], [-25.42041, -49.26889], [-25.42035, -49.26912], [-25.4182, -49.26861], [-25.41755, -49.26844], [-25.41678, -49.26826], [-25.41668, -49.26822], [-25.41667, -49.26819], [-25.41663, -49.26813], [-25.41659, -49.26811], [-25.41668, -49.26769], [-25.41673, -49.2677], [-25.41668, -49.26769], [-25.41664, -49.26787], [-25.41658, -49.26811], [-25.4166, -49.26811], [-25.41662, -49.26812], [-25.41665, -49.26815], [-25.41667, -49.26818], [-25.41667, -49.26819], [-25.41675, -49.26825], [-25.41755, -49.26844]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_47855a72d8fa7b84b3b807a2bee33c2b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b9e6b68e40b2151f908fa2a6a2ec89fd = $(<div id="html_b9e6b68e40b2151f908fa2a6a2ec89fd" style="width: 100.0%; height: 100.0%;"><b>Avenida Cândido de Abreu</b><br>Modo: Ônibus<br>Distância: 1.3 km<br>Duração (sem trânsito): 9 mins<br>(Somente ônibus)</div>)[0];
+                popup_47855a72d8fa7b84b3b807a2bee33c2b.setContent(html_b9e6b68e40b2151f908fa2a6a2ec89fd);
+            
+        
+
+        poly_line_5ef09b57faf52906056d3eb07fa2453a.bindPopup(popup_47855a72d8fa7b84b3b807a2bee33c2b)
+        ;
+
+        
+    
+    
+            poly_line_5ef09b57faf52906056d3eb07fa2453a.bindTooltip(
+                <div>
+                     Avenida Cândido de Abreu - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5e7e156178b196a70ad13eeb5e0ab4d8 = L.polyline(
+                [[-25.44055, -49.26035], [-25.44052, -49.26025], [-25.44012, -49.26035], [-25.43819, -49.26089], [-25.43877, -49.26243], [-25.43947, -49.26206], [-25.44017, -49.26397], [-25.44071, -49.26546], [-25.44131, -49.26687], [-25.44155, -49.2675], [-25.44165, -49.26777], [-25.44198, -49.26857], [-25.44226, -49.26937], [-25.44234, -49.26958], [-25.4429, -49.27104], [-25.4433, -49.27206], [-25.44397, -49.27384], [-25.4447, -49.27574], [-25.4452, -49.27704], [-25.44583, -49.27876], [-25.44582, -49.27882], [-25.44611, -49.27962], [-25.44638, -49.2803], [-25.44802, -49.28478], [-25.44884, -49.28703], [-25.45025, -49.29086], [-25.45298, -49.29825], [-25.45438, -49.30204], [-25.45479, -49.30316], [-25.45484, -49.30331], [-25.45495, -49.30361], [-25.45505, -49.30379], [-25.45514, -49.30397], [-25.45613, -49.30363], [-25.45702, -49.30333], [-25.45684, -49.30292], [-25.45633, -49.30158]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_a09dec105837c92f15e364a86ae38c73 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7a58c6d3022bca8a167e6fff66cdf5f5 = $(<div id="html_7a58c6d3022bca8a167e6fff66cdf5f5" style="width: 100.0%; height: 100.0%;"><b>Avenida Pres. Getúlio Vargas</b><br>Modo: Carro<br>Distância: 5.5 km<br>Duração (sem trânsito): 15 mins<br>Duração (com trânsito): 15 mins<br>Condição: Trânsito livre</div>)[0];
+                popup_a09dec105837c92f15e364a86ae38c73.setContent(html_7a58c6d3022bca8a167e6fff66cdf5f5);
+            
+        
+
+        poly_line_5e7e156178b196a70ad13eeb5e0ab4d8.bindPopup(popup_a09dec105837c92f15e364a86ae38c73)
+        ;
+
+        
+    
+    
+            poly_line_5e7e156178b196a70ad13eeb5e0ab4d8.bindTooltip(
+                <div>
+                     Avenida Pres. Getúlio Vargas - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_eba78e8dea0c7f5f7a0914b69c2deb66 = L.polyline(
+                [[-25.44055, -49.26035], [-25.44079, -49.261], [-25.44093, -49.26137], [-25.4402, -49.26171], [-25.43947, -49.26206], [-25.43967, -49.26261], [-25.43963, -49.26263], [-25.43967, -49.26261], [-25.43997, -49.2634], [-25.44034, -49.26445], [-25.44061, -49.26519], [-25.44092, -49.26598], [-25.44133, -49.26694], [-25.44165, -49.26777], [-25.44184, -49.26825], [-25.44198, -49.26857], [-25.44223, -49.26931], [-25.44234, -49.26956], [-25.44247, -49.26994], [-25.44296, -49.27118], [-25.4433, -49.27207], [-25.44408, -49.27413], [-25.44472, -49.27578], [-25.4454, -49.2776], [-25.44583, -49.27877], [-25.44582, -49.27882], [-25.44589, -49.279], [-25.44621, -49.27987], [-25.44663, -49.28101], [-25.44816, -49.28517], [-25.44884, -49.28703], [-25.45025, -49.29086], [-25.45298, -49.29825], [-25.45438, -49.30204], [-25.45479, -49.30316], [-25.45484, -49.30331], [-25.45495, -49.30361], [-25.45505, -49.30379], [-25.45514, -49.30397], [-25.45613, -49.30363], [-25.45757, -49.30314], [-25.45793, -49.30297], [-25.45864, -49.30271], [-25.45917, -49.30254], [-25.45916, -49.30248], [-25.45917, -49.30254], [-25.45864, -49.30271], [-25.45793, -49.30297], [-25.45757, -49.30314], [-25.45702, -49.30333], [-25.45684, -49.30292], [-25.45648, -49.30196], [-25.45633, -49.30158]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_c573dad48ef54f5c5665b58228659a79 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dcf3ef4a339a6464acc2906dbc46862c = $(<div id="html_dcf3ef4a339a6464acc2906dbc46862c" style="width: 100.0%; height: 100.0%;"><b>Avenida Pres. Getúlio Vargas</b><br>Modo: Ônibus<br>Distância: 5.8 km<br>Duração (sem trânsito): 25 mins<br>(Somente ônibus)</div>)[0];
+                popup_c573dad48ef54f5c5665b58228659a79.setContent(html_dcf3ef4a339a6464acc2906dbc46862c);
+            
+        
+
+        poly_line_eba78e8dea0c7f5f7a0914b69c2deb66.bindPopup(popup_c573dad48ef54f5c5665b58228659a79)
+        ;
+
+        
+    
+    
+            poly_line_eba78e8dea0c7f5f7a0914b69c2deb66.bindTooltip(
+                <div>
+                     Avenida Pres. Getúlio Vargas - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_eb89a31b15d407bd66348481ff0a86a0 = L.polyline(
+                [[-25.39938, -49.23686], [-25.39911, -49.23643], [-25.39891, -49.23629], [-25.39854, -49.23571], [-25.3978, -49.23459], [-25.39717, -49.23362]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_d77b8d7bc4fce896d1a2a854d730fbe9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_62ebce55896377ee06e732181ed8c5f2 = $(<div id="html_62ebce55896377ee06e732181ed8c5f2" style="width: 100.0%; height: 100.0%;"><b>Avenida Pref. Erasto Gaertner</b><br>Modo: Carro<br>Distância: 0.4 km<br>Duração (sem trânsito): 1 min<br>Duração (com trânsito): 1 min<br>Condição: Trânsito livre</div>)[0];
+                popup_d77b8d7bc4fce896d1a2a854d730fbe9.setContent(html_62ebce55896377ee06e732181ed8c5f2);
+            
+        
+
+        poly_line_eb89a31b15d407bd66348481ff0a86a0.bindPopup(popup_d77b8d7bc4fce896d1a2a854d730fbe9)
+        ;
+
+        
+    
+    
+            poly_line_eb89a31b15d407bd66348481ff0a86a0.bindTooltip(
+                <div>
+                     Avenida Pref. Erasto Gaertner - Carro
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_fa07831d697f6ffdc5fe98a8424e6410 = L.polyline(
+                [[-25.39938, -49.23686], [-25.39911, -49.23643], [-25.39891, -49.23629], [-25.39854, -49.23571], [-25.3978, -49.23459], [-25.39717, -49.23362]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_33df50edc92a0deee8abd50d014fdbfb);
+        
+    
+        var popup_356b4177e397e86043fe8c7886766931 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1b4881f0990df728c890b5fa699e4f6a = $(<div id="html_1b4881f0990df728c890b5fa699e4f6a" style="width: 100.0%; height: 100.0%;"><b>Avenida Pref. Erasto Gaertner</b><br>Modo: Ônibus<br>Distância: 0.4 km<br>Duração (sem trânsito): 5 mins<br>(Somente ônibus)</div>)[0];
+                popup_356b4177e397e86043fe8c7886766931.setContent(html_1b4881f0990df728c890b5fa699e4f6a);
+            
+        
+
+        poly_line_fa07831d697f6ffdc5fe98a8424e6410.bindPopup(popup_356b4177e397e86043fe8c7886766931)
+        ;
+
+        
+    
+    
+            poly_line_fa07831d697f6ffdc5fe98a8424e6410.bindTooltip(
+                <div>
+                     Avenida Pref. Erasto Gaertner - Ônibus
+                 </div>,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
